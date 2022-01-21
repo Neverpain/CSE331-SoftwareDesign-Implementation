@@ -12,7 +12,7 @@
 package setup;
 
 import java.lang.Iterable;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * This is a container can be used to contain Balls. The key
@@ -25,6 +25,7 @@ public class Box implements Iterable<Ball> {
      * ballContainer is used to internally store balls for this Box
      */
     private BallContainer ballContainer;
+    private double maxVolume;
 
     /**
      * Constructor that creates a new box.
@@ -32,8 +33,8 @@ public class Box implements Iterable<Ball> {
      * @param maxVolume Total volume of balls that this box can contain.
      */
     public Box(double maxVolume) {
-        // Your code goes here.  Remove the exception after you're done.
-        throw new RuntimeException("Method not implemented");
+        ballContainer = new BallContainer();
+        this.maxVolume = maxVolume;
     }
 
     /**
@@ -46,7 +47,6 @@ public class Box implements Iterable<Ball> {
     public Iterator<Ball> iterator() {
         return ballContainer.iterator();
     }
-
 
     /**
      * This method is used to add Ball objects to this box of
@@ -64,8 +64,13 @@ public class Box implements Iterable<Ball> {
      * @spec.requires b != null.
      */
     public boolean add(Ball b) {
-        // Your code goes here.  Remove the exception after you're done.
-        throw new RuntimeException("Method not implemented");
+        if (getVolume() <= maxVolume - b.getVolume() && !(contains(b))) {
+            ballContainer.add(b);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
@@ -76,10 +81,16 @@ public class Box implements Iterable<Ball> {
      * @return an iterator that returns all the balls in this box in
      * ascending size.
      */
-    public Iterator<Ball> getBallsFromSmallest() {
-        // Your code goes here.  Remove the exception after you're done.
-        throw new RuntimeException("Method not implemented");
+    public Iterator<Ball> getBallsFromSmallest(){
+        Comparator<Ball> comparator = (o1, o2) -> (int)(o1.getVolume() - o2.getVolume());
+        List<Ball> list = new ArrayList<>();
+        for (Ball b :this) {
+            list.add(b);
+        }
+        list.sort(comparator);
+        return list.iterator();
     }
+
 
     /**
      * Removes a ball from the box. This method returns
@@ -136,5 +147,4 @@ public class Box implements Iterable<Ball> {
     public boolean contains(Ball b) {
         return ballContainer.contains(b);
     }
-
 }
