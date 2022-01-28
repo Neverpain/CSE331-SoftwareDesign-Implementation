@@ -165,13 +165,13 @@ public final class RatTerm {
      * @spec.requires arg != null
      */
     public RatTerm add(RatTerm arg) {
-        if (expt != arg.expt && (!(this.isNaN()) || !(this.isZero()) || !(arg.isNaN())
-        || !(arg.isZero())))  {
+        if (expt != arg.expt && !((this.isNaN()) || (this.isZero()) || (arg.isNaN())
+        || (arg.isZero())))  {
             throw new IllegalArgumentException();
         } else if (this.isNaN() || arg.isNaN()) {
             return RatTerm.NaN;
         } else {
-            return new RatTerm(coeff.add(arg.coeff), expt);
+            return new RatTerm(coeff.add(arg.coeff), Math.max(expt, arg.expt));
         }
     }
 
@@ -185,13 +185,13 @@ public final class RatTerm {
      * @spec.requires arg != null
      */
     public RatTerm sub(RatTerm arg) {
-        if (expt != arg.expt && (!(this.isNaN()) || !(this.isZero()) || !(arg.isNaN())
-        || !(arg.isZero())))  {
+        if (expt != arg.expt && !((this.isNaN()) || (this.isZero()) || (arg.isNaN())
+        || (arg.isZero())))  {
             throw new IllegalArgumentException();
         } else if (this.isNaN() || arg.isNaN()) {
             return RatTerm.NaN;
         } else {
-            return new RatTerm(coeff.sub(arg.coeff), expt);
+            return new RatTerm(coeff.sub(arg.coeff), Math.max(expt, arg.expt));
         }
     }
 
@@ -206,7 +206,7 @@ public final class RatTerm {
         if (this.isNaN() || arg.isNaN()) {
             return RatTerm.NaN;
         } else {
-            return new RatTerm(coeff.mul(arg.coeff), expt);
+            return new RatTerm(coeff.mul(arg.coeff), expt + arg.expt);
         }
     }
 
@@ -222,7 +222,7 @@ public final class RatTerm {
         if (this.isNaN() || arg.isNaN()) {
             return RatTerm.NaN;
         } else {
-            return new RatTerm(coeff.div(arg.coeff), expt);
+            return new RatTerm(coeff.div(arg.coeff), expt - arg.expt);
         }
     }
 
