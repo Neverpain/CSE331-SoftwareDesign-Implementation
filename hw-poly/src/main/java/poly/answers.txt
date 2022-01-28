@@ -14,7 +14,28 @@ r = p * q:
                     then replace t_r with the sum of t_r and t_pq
                     else insert t_pq into r as a new term
 
+    Iteration 2: p = (x^3 + x - 1), q = (x + 1), h = (-x^2 + x + 1), t_hh = -x^2, t_hq = x, r = x^2;
+    [while the highest degree term in h, t_hh, is equal or greater than the highest degree
+    term in q, t_hq]
+        [set t_div to be the quotient between t_hh and t_hq] t_div = -x^2 / x = -x
+        [insert t_div into r as a new term] r = x^2 - x
+        [set t_temp to 0] t_temp = 0
+        [foreach term, t_q, in q]
+            Iteration 2 - 1: t_q = x, h = (-x^2 + x - 1)
+            [set t_temp to be equal to the product of t_div and t_q] t_temp = -x * x = -x^2
+            [if t_temp has the same degree as any term, t_h, in h] Yes, t_h = -x^2
+                [then replace t_temp with the difference between t_h and t_temp] t_temp = -x^2 + x^2 = 0
+                [replace t_h with t_temp as a term] t_h = 0, h = 0 + x - 1
+                [else replace t_temp with -t_temp]
+                [insert the new term into h]
 
+            Iteration 2 - 2: t_q = 1, h = (x - 1)
+            [set t_temp to be equal to the product of t_div and t_q] t_temp  = -x * 1 = -x
+            [if t_temp has the same degree as any term, t_h, in h] Yes, t_h = x
+                [then replace t_temp with the difference between t_h and t_temp] t_temp = x + x = 2x
+                [replace t_h with t_temp as a term] t_h = 2x, h = 2x - 1]
+                [else replace t_temp with -t_temp]
+                [insert the new term into h]
 
 
 //2. Division Pseudocode
