@@ -2,27 +2,157 @@
 ## Part 0
 ###########################################################################
 
-1. Multiplication Pseudocode
+//1. Multiplication Pseudocode
+r = p * q:
+    //[intialization needed]
+    {INV: r = r0 + r1 + ... + ri-1, where ri is the ith term in r}
+        foreach term, t_p, in p:
+            {INV: ri = ri + t_h, where ri is the ith term in r}
+            foreach term, t_q, in q:
+                set t_pq to be equal to the product of t_q and t_p
+                if any term, t_r, in r has the same degree as t_pq
+                    then replace t_r with the sum of t_r and t_pq
+                    else insert t_pq into r as a new term
 
 
 
-2. Division Pseudocode
+
+//2. Division Pseudocode
+r = p / q:
+    set h = p by making a term-by-term copy of all terms in p to h
+    set r = 0
+    {INV: }
+    while the highest degree term in h, t_hh, is equal or greater than the highest degree
+    term in q, t_hq:
+        set t_div to be the quotient between t_hh and t_hq
+        insert t_div into r as a new term
+        set t_temp = 0
+        {INV: }
+        foreach term, t_q, in q:
+            set t_temp to be equal to the product of t_div and t_q
+            if t_temp has the same degree as any term, t_h, in h
+                then replace t_temp with the difference between t_h and t_temp
+                replace t_h with t_temp as a term
+                else replace t_temp with -t_temp
+                insert the new term into h
+
 
 
 
 3. Division Example: (x3+x-1) / (x+1) = x2-x+2
+p = (x^3 + x - 1)
+q = (x + 1)
+h = copy of p = (x^3 + x - 1)
+r = 0
+    Iteration 1: p = (x^3 + x - 1), q = (x + 1), h = (x^3 + x - 1), t_hh = x^3, t_hq = x, r = 0;
+    [while the highest degree term in h, t_hh, is equal or greater than the highest degree
+    term in q, t_hq]
+        [set t_div to be the quotient between t_hh and t_hq] t_div = x^3 / x = x^2
+        [insert t_div into r as a new term] r = x^2
+        [set t_temp to 0] t_temp = 0
+        [foreach term, t_q, in q]
+            Iteration 1 - 1: t_q = x, h = (x^3 + x - 1)
+            [set t_temp to be equal to the product of t_div and t_q] t_temp = x^2 * x = x^3
+            [if t_temp has the same degree as any term, t_h, in h] Yes, t_h = x^3
+                [then replace t_temp with the difference between t_h and t_temp] t_temp = x^3 - x^3 = 0
+                [replace t_h with t_temp as a term] t_h = 0, h = 0 + x - 1
+                [else replace t_temp with -t_temp]
+                [insert the new term into h]
 
+            Iteration 1 - 2: t_q = 1, h = (x - 1)
+            [set t_temp to be equal to the product of t_div and t_q] t_temp = x^2 * 1 = x^2
+            [if t_temp has the same degree as any term, t_h, in h] No
+                [then replace t_temp with the difference between t_h and t_temp]
+                [replace t_h with t_temp as a term]
+                [else replace t_temp with -t_temp] t_temp = -x^2
+                [insert the new term into h] h = (-x^2 + x + 1)
 
+    Iteration 2: p = (x^3 + x - 1), q = (x + 1), h = (-x^2 + x + 1), t_hh = -x^2, t_hq = x, r = x^2;
+    [while the highest degree term in h, t_hh, is equal or greater than the highest degree
+    term in q, t_hq]
+        [set t_div to be the quotient between t_hh and t_hq] t_div = -x^2 / x = -x
+        [insert t_div into r as a new term] r = x^2 - x
+        [set t_temp to 0] t_temp = 0
+        [foreach term, t_q, in q]
+            Iteration 2 - 1: t_q = x, h = (-x^2 + x - 1)
+            [set t_temp to be equal to the product of t_div and t_q] t_temp = -x * x = -x^2
+            [if t_temp has the same degree as any term, t_h, in h] Yes, t_h = -x^2
+                [then replace t_temp with the difference between t_h and t_temp] t_temp = -x^2 + x^2 = 0
+                [replace t_h with t_temp as a term] t_h = 0, h = 0 + x - 1
+                [else replace t_temp with -t_temp]
+                [insert the new term into h]
 
+            Iteration 2 - 2: t_q = 1, h = (x - 1)
+            [set t_temp to be equal to the product of t_div and t_q] t_temp  = -x * 1 = -x
+            [if t_temp has the same degree as any term, t_h, in h] Yes, t_h = x
+                [then replace t_temp with the difference between t_h and t_temp] t_temp = x + x = 2x
+                [replace t_h with t_temp as a term] t_h = 2x, h = 2x - 1]
+                [else replace t_temp with -t_temp]
+                [insert the new term into h]
+
+    Iteration 3: p = (x^3 + x - 1), q = (x + 1), h = (2x - 1), t_hh = 2x, t_hq = x, r = x^2 - x;
+        [while the highest degree term in h, t_hh, is equal or greater than the highest degree
+        term in q, t_hq]
+            [set t_div to be the quotient between t_hh and t_hq] t_div = 2x / x = 2
+            [insert t_div into r as a new term] r = x^2 - x + 2
+            [set t_temp to 0] t_temp = 0
+            [foreach term, t_q, in q]
+                Iteration 3 - 1: t_q = x, h = (2x - 1)
+                [set t_temp to be equal to the product of t_div and t_q] t_temp = 2 * x = 2x
+                [if t_temp has the same degree as any term, t_h, in h] Yes, t_h = 2x
+                    [then replace t_temp with the difference between t_h and t_temp] t_temp = 2x - 2x = 0
+                    [replace t_h with t_temp as a term] t_h = 0, h = 0 - 1
+                    [else replace t_temp with -t_temp]
+                    [and insert the new term into h]
+
+                Iteration 3 - 2: t_q = 1, h = (-1)
+                [set t_temp to be equal to the product of t_div and t_q] t_temp  = 2 * 1 = 2
+                [if t_temp has the same degree as any term, t_h, in h] Yes, t_h = -1
+                    [then replace t_temp with the difference between t_h and t_temp] t_temp = -1 - 2 = -3
+                    [replace t_h with t_temp as a term] t_h = -1, h = -3]
+                    [else replace t_temp with -t_temp]
+                    [insert the new term into h]
+
+    Iteration 4: p = (x^3 + x - 1), q = (x + 1), h = -3, t_hh = -3, t_hq = x, r = x^2 - x + 2;
+        [while the highest degree term in h, t_hh, is equal or greater than the highest degree
+        term in q, t_hq] No
+        We are done! r = x^2 - x + 2 (with a remainder of h = -3)
 
 ## Part 1
 ###########################################################################
 
-1. Weakened Rep Invariant
+//1. Weakened Rep Invariant
+The two methods that need to be changed are toString(), and checkRep().
+    1) toString(): add code to find the gcd and reduce the numerator and denominator by it to
+    follow specs
+        int gcd = gcd(numer, denom): finds gcd for reducing fractions
+        numer = numer / gcd: reduces the numer
+        denom = denom / gcd: reduces the demon
 
+    2) checkRep(): need to remove if statement that checks if the fraction is reduced
+    to avoid throwing exceptions since rep invariant changed
+
+Methods that could be different if they were implemented with this new rep invariant are
+equals(Object obj), hashCode(), RatNum(int n, int d).
+    1) equals(Object obj):
+        change return (this.numer == rn.numer) && (this.denom == rn.denom) into this.numer*rn.denom ==
+        this.denom*rn.numer
+
+    2) hashCode(): add code to find the gcd and reduce the numerator and denominator by it to
+    create equivalent hashcodes for different fractions
+        int gcd = gcd(numer, denom): finds gcd for reducing fractions
+        numer = numer / gcd: reduces the numer
+        denom = denom / gcd: reduces the demon
+
+    3) RatNum(int n, int d): remove the part of the code that finds the gcd and reduces the fraction
+    since rep invariant changed
 
 
 2. Alternate add, sub, mul, div
+The above changes would fail to meet the specifications of the methods because it doesn't have a
+specification that shows modifications (@spec.modifies), so the changes that modify the fields
+would fail to meet the specifications. With that, a RatNum instance represents an immutable rational number, so if
+the changes were implemented, it would not meet that specification either.
 
 
 
