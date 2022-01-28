@@ -27,7 +27,10 @@
 
 
 3. Constructor checkReps
-
+It is sufficient to call the checkRep() only at the end of the constructors
+because the constructors reduce ratNum and change the denominator appropriately (if denom < 0 it changes
+it to -demon, a number > 0) and because RatNum represents an immutable rational number, none of the
+methods can modify the fields of ratNum keeping the rep invariant true.
 
 
 

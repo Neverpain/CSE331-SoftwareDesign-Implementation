@@ -81,8 +81,14 @@ public final class RatTerm {
      * t.expt = 0, otherwise t.expt = e
      */
     public RatTerm(RatNum c, int e) {
-        // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.constructor is not yet implemented");
+        checkRep();
+        coeff = c;
+        if (c.equals(RatNum.ZERO)) {
+            expt = 0;
+        } else {
+            expt = e;
+        }
+        checkRep();
     }
 
     /**
@@ -111,8 +117,7 @@ public final class RatTerm {
      * @return true if and only if this has NaN as a coefficient
      */
     public boolean isNaN() {
-        // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.isNaN() is not yet implemented");
+        return (coeff.isNaN());
     }
 
     /**
@@ -121,8 +126,7 @@ public final class RatTerm {
      * @return true if and only if this has zero as a coefficient
      */
     public boolean isZero() {
-        // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.isZero() is not yet implemented");
+        return (coeff.equals(new RatNum(0, 0)));
     }
 
     /**
