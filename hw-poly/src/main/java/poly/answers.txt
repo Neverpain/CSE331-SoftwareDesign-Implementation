@@ -2,22 +2,23 @@
 ## Part 0
 ###########################################################################
 
-//1. Multiplication Pseudocode
+1. Multiplication Pseudocode
 r = p * q:
-    {INV: r = r0 + r1 + ... + ri-1, where ri is the ith term in r}
+    //{INV: a new term is added or replaces a term in r}
         foreach term, t_p, in p:
-            {INV: ri = ri + t_h, where ri is the ith term in r}
+            //{INV: newTerm = p * q1 * q2 *...* qn with q being the divisor}
             foreach term, t_q, in q:
                 set t_pq to be equal to the product of t_q and t_p
                 if any term, t_r, in r has the same degree as t_pq
                     then replace t_r with the sum of t_r and t_pq
                     else insert t_pq into r as a new term
 
-//2. Division Pseudocode
+2. Division Pseudocode
 r = p / q:
     set h = p by making a term-by-term copy of all terms in p to h
     set r = 0
-    {INV: }
+    //{INV: a new term, div, is inserted into r with div being the division of t_hh and t_hq, and with
+    //h being the remainder after each division}
     while the highest degree term in h, t_hh, is equal or greater than the highest degree
     term in q, t_hq:
         set t_div to be the quotient between t_hh and t_hq
@@ -117,46 +118,51 @@ r = 0
 ## Part 1
 ###########################################################################
 
-//1. Weakened Rep Invariant
+1. Weakened Rep Invariant
 The two methods that need to be changed are toString(), and checkRep().
     1) toString(): add code to find the gcd and reduce the numerator and denominator by it to
     follow specs
-        int gcd = gcd(numer, denom): finds gcd for reducing fractions
-        numer = numer / gcd: reduces the numer
-        denom = denom / gcd: reduces the demon
+        -Adding this extra code shows us that toString() returns a reduced RatNum, but it makes
+        it do more
 
     2) checkRep(): need to remove if statement that checks if the fraction is reduced
     to avoid throwing exceptions since rep invariant changed
-
+        -removes an extra check from constructors, lessens work done
 Methods that could be different if they were implemented with this new rep invariant are
 equals(Object obj), hashCode(), RatNum(int n, int d).
-    1) equals(Object obj):
-        change return (this.numer == rn.numer) && (this.denom == rn.denom) into this.numer*rn.denom ==
-        this.denom*rn.numer
 
-    2) hashCode(): add code to find the gcd and reduce the numerator and denominator by it to
+    3) equals(Object obj): change return (this.numer == rn.numer) && (this.denom == rn.denom) into
+    this.numer*rn.denom == this.denom*rn.numer
+        -lowers code clarity, shows us that it returns if the fractions are equal through cross
+        multiplication rather than just one num equals another
+
+    4) hashCode(): add code to find the gcd and reduce the numerator and denominator by it to
     create equivalent hashcodes for different fractions
-        int gcd = gcd(numer, denom): finds gcd for reducing fractions
-        numer = numer / gcd: reduces the numer
-        denom = denom / gcd: reduces the demon
+        -makes the code do extra work to find hashcodes, unreduced when put as parameter
 
-    3) RatNum(int n, int d): remove the part of the code that finds the gcd and reduces the fraction
-    since rep invariant changed
+    5) RatNum(int n, int d): remove the part of the code that finds the gcd and reduces
+    the fraction since rep invariant changed
+        -lessens work for constructors, but code clarity is harder for those methods that
+        require reduced forms of RatNum
+
 
 
 2. Alternate add, sub, mul, div
 The above changes would fail to meet the specifications of the methods because it doesn't have a
-specification that shows modifications (@spec.modifies), so the changes that modify the fields
-would fail to meet the specifications. With that, a RatNum instance represents an immutable rational number, so if
-the changes were implemented, it would not meet that specification either.
+specification that shows modifications (@spec.modifies or @spec.effects), so the changes
+that modify the fields would fail to meet the specifications. With that, a RatNum instance
+represents an immutable rational number, so if the changes were implemented, it would not meet
+the specification of the class either and create rep exposure.
 
 
 
 3. Constructor checkReps
 It is sufficient to call the checkRep() only at the end of the constructors
-because the constructors reduce ratNum and change the denominator appropriately (if denom < 0 it changes
-it to -demon, a number > 0) and because RatNum represents an immutable rational number, none of the
-methods can modify the fields of ratNum keeping the rep invariant true.
+because the constructors reduce ratNum and change the denominator appropriately
+(if denom < 0 it changesit to -demon, a number > 0) and because RatNum represents
+an immutable rational number, none of the methods can/should modify the fields of
+ratNum keeping the rep invariant true. Furthermore, all the methods create new
+instances of RatNum, so the rep invariant is holds.
 
 
 
@@ -164,14 +170,41 @@ methods can modify the fields of ratNum keeping the rep invariant true.
 ###########################################################################
 
 1. Calls to checkRep in RatTerm
-I only put the calls to checkRep in RatTerm at the end of the constructors because of the nature
-of the specifications making it immutable and how the methods follow that by returning new RatTerms
-(not modifying the fields), which all allow the rep invariant to hold throughout.
+I only put the calls to checkRep in RatTerm at the end of the constructors because of
+the nature of the specifications making it immutable and how the methods follow that
+by returning new RatTerms (not modifying the fields), which all allow the rep invariant
+to hold throughout.
 
-2. Some methods that would change include the checkRep(), isZero(), and RatTerm(int c, int e).
-    checkRep(): since the invariant changed, the bottom assert (!coeff.equals(RatNum.ZERO) || expt == 0)
-        can be changed to assert(!coeff.equals(RatNum.
-3.
+2. Some methods that would change include the checkRep(), the operations, toString(), equals
+(Object obj), and RatTerm(int c, int e).
+
+    1) checkRep(): since the invariant changed, the bottom assert (!coeff.equals(RatNum.ZERO)
+    || expt == 0) can be changed to assert(!coeff.equals(RatNum.ZERO) only
+        - weakens a condition slightly, less work
+
+    2) RatTerm(int c, int e): instead of setting the exponent to 0 if coeff.equals(RatNum.ZERO),
+    you can set it to e
+        -less exact special case of RatNum.ZERO, makes methods more complicated
+
+    3) add(),sub(),mul(), and div(): need to create another condition to check for a zero coefficient
+    with an exponent that has the same exponent as another term
+        -adds an extra condition to check each time, more work to do
+
+    4) toString(): check for a zero coefficient and throw an exception or return 0
+        -adds an extra condition to check each time, more work to do
+
+    5) equals(object obj): check for equivalent zero coefficients and return true
+        -adds an extra condition to check each time, more work to do
+
+
+3. Some methods that would change include checkRep() and RatNum(int c, int e);
+
+    1)checkRep(): create a new assert statement for NaN and set its exponent to 0
+        - adds an extra statement that executes everytime, more work
+
+    2)RatNum(int c, int e): set a new condition where when coeff.equals(RatNum.NaN),
+    change the exponent to 0
+        - adds an extra statement that executes everytime, more work
 
 
 
@@ -179,6 +212,15 @@ of the specifications making it immutable and how the methods follow that by ret
 ###########################################################################
 
 1. Calls to checkRep in RatPoly
+I included calls to checkRep() at the end of constructors because similarly to
+RatNum and RatTerm, RatPoly also has immutable fields as its specifications, therefore
+its methods involve either returning those immutable field views, or returning
+a new RatPoly that will follow the rep invariant because of checkRep() that is
+included in the constructor.
 
-
+2. The advantages of representing RatPoly like this include the separation of
+fields, exponents and coefficients, for better code clarity, and the easier
+getting of fields just by getting the index of it. The disadvantages, however,
+are that for defensive copying, you would be required to create at the very least,
+two new lists, which would decrease execution efficiency.
 

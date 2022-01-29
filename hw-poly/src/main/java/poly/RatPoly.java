@@ -131,6 +131,13 @@ public final class RatPoly {
      * not make a copy of 'rt'.
      */
     private RatPoly(List<RatTerm> rt) {
+        //{INV: the list, rt, contains the elements from [0...ZERO...i] }
+        for (int i = 0; i < rt.size(); i++) {
+            if (rt.get(i).equals(RatTerm.ZERO)) {
+                rt.remove(i);
+                i--;
+            }
+        }
         terms = rt;
         // The spec tells us that we don't need to make a copy of 'rt'
         checkRep();
@@ -159,7 +166,7 @@ public final class RatPoly {
      * @spec.requires !this.isNaN()
      */
     public RatTerm getTerm(int deg) {
-        //{INV: partially iterating through the list, terms, from [0...k-1]}
+        //{INV: the list, terms, contains elements from [0...DEG...i]}
         for (int i = 0; i < terms.size(); i++) {
             if (deg == terms.get(i).getExpt()) {
                 return terms.get(i);
@@ -174,7 +181,7 @@ public final class RatPoly {
      * @return true if and only if this has some coefficient = "NaN"
      */
     public boolean isNaN() {
-        //{INV: partially iterating through the list, terms, from [0...k-1]}
+        //{INV: the list, terms, contains elements from [0...Nan...i]}
         for (int i = 0; i < terms.size(); i++) {
             if (terms.get(i).getCoeff().isNaN()) {
                 return true;
@@ -205,17 +212,21 @@ public final class RatPoly {
      * cofind(lst,newTerm.getExpt()) + newTerm.getCoeff())
      */
     private static void sortedInsert(List<RatTerm> lst, RatTerm newTerm) {
-        //{INV: partially iterates through the list to find an index for the new term}
-        for (int i = 0; i < lst.size(); i++) {
-            if (newTerm.getExpt() > lst.get(i).getExpt()) {
-                lst.add(i, newTerm);
-            } else if (newTerm.getExpt() == lst.get(i).getExpt()) {
-                lst.set(i, new RatTerm(lst.get(i).getCoeff().add(newTerm.getCoeff()), newTerm.getExpt()));
-                if (lst.get(i).getCoeff().equals(RatNum.ZERO)) {
-                    lst.remove(i);
-                    i--;
-                }
+        int i = 0;
+        //{INV: the list, rt, contains the elements from [0...STERM...i] with STERM being the term with the same
+        // exponent as newTerm}
+        while (i < lst.size() && newTerm.getExpt() < lst.get(i).getExpt()) {
+            i = i + 1;
+        }
+        if (i == lst.size()) {
+            lst.add(newTerm);
+        } else if (newTerm.getExpt() == lst.get(i).getExpt()) {
+            lst.set(i, new RatTerm(lst.get(i).getCoeff().add(newTerm.getCoeff()), newTerm.getExpt()));
+            if (lst.get(i).getCoeff().equals(RatNum.ZERO)) {
+                lst.remove(i);
             }
+        } else {
+            lst.add(i, newTerm);
         }
     }
 
@@ -229,7 +240,8 @@ public final class RatPoly {
             return RatPoly.NaN;
         } else {
             List<RatTerm> temp = new ArrayList<>();
-            //{INV: }
+            //{INV: a new term from this at index of i is changed into -i and
+            // inserted back into the list, temp}
             for (int i = 0; i < terms.size(); i++) {
                 temp.add(terms.get(i).negate());
             }
@@ -250,7 +262,8 @@ public final class RatPoly {
             return new RatPoly(RatTerm.NaN);
         } else {
             List<RatTerm> temp = new ArrayList<>(terms);
-            //{INV: }
+            //{INV: a new term added from RatTerms from this and p both at an index of i is
+            // inserted into the list, temp}
             for (int i = 0; i < p.terms.size(); i++) {
                 sortedInsert(temp,p.terms.get(i));
             }
@@ -271,7 +284,8 @@ public final class RatPoly {
             return new RatPoly(RatTerm.NaN);
         } else {
             List<RatTerm> temp = new ArrayList<>(terms);
-            //{INV: }
+            //{INV: a new term subtracted from RatTerms from this and p both at an index of i is
+            // inserted into the list, temp}
             for (int i = 0; i < p.terms.size(); i++) {
                 sortedInsert(temp,p.negate().terms.get(i));
             }
@@ -292,7 +306,9 @@ public final class RatPoly {
             return new RatPoly(RatTerm.NaN);
         } else {
             List<RatTerm> temp = new ArrayList<>();
+            //{INV: newTerm is inserted into the list, temp}
             for (int i = 0; i < terms.size(); i++) {
+                //{INV: newTerm = i * j1 * j2 *...* jn with j being the index of a RatTerm in p}
                 for (int j = 0; j < p.terms.size(); j++) {
                     RatTerm product = terms.get(i).mul(p.terms.get(j));
                     sortedInsert(temp, product);
@@ -335,22 +351,6 @@ public final class RatPoly {
      * p.isNaN(), returns some q such that q.isNaN().
      * @spec.requires p != null
      */
-   /* set h = p by making a term-by-term copy of all terms in p to h
-    set r = 0
-    {INV: }
-    while the highest degree term in h, t_hh, is equal or greater than the highest degree
-    term in q, t_hq:
-    set t_div to be the quotient between t_hh and t_hq
-    insert t_div into r as a new term
-    set t_temp = 0
-    {INV: }
-    foreach term, t_q, in q:
-    set t_temp to be equal to the product of t_div and t_q
-            if t_temp has the same degree as any term, t_h, in h
-    then replace t_temp with the difference between t_h and t_temp
-    replace t_h with t_temp as a term
-                else replace t_temp with -t_temp
-    insert the new term into h */
     public RatPoly div(RatPoly p) {
         if (p.equals(RatPoly.ZERO) || this.isNaN() || p.isNaN()) {
             return new RatPoly(RatTerm.NaN);
@@ -358,13 +358,13 @@ public final class RatPoly {
         else {
             RatPoly r = new RatPoly(terms);
             RatPoly quotient = new RatPoly();
-            //{INV: }
-            while (r.degree() >= p.degree()) {
-                RatTerm temp;
-                RatTerm div = new RatTerm(r.terms.get(0).getCoeff().div(p.terms.get(0).getCoeff()), r.degree());
+            //{INV: a new term, div, is inserted into quotient with div being the division of two terms, and with
+            // r being the remainder after each division}
+            while (r.terms.size() != 0 && r.degree() >= p.degree()) {
+                RatTerm div = new RatTerm(r.terms.get(0).getCoeff().div(p.terms.get(0).getCoeff()),
+                r.degree() - p.degree());
                 quotient.terms.add(div);
-                RatPoly productPoly = p.mul(new RatPoly(div));
-                r = r.sub(productPoly);
+                r = r.sub(p.mul(new RatPoly(div)));
             }
             return quotient;
         }
@@ -383,7 +383,7 @@ public final class RatPoly {
             return Double.NaN;
         } else {
             double value = 0;
-            //{INV: }
+            //{INV: value = the sum of double values contained in the list from [0...i]}
             for (int i = 0; i < terms.size(); i++) {
                 value += terms.get(i).eval(d);
             }
