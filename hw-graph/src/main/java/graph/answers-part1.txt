@@ -8,55 +8,78 @@ a. Write an AF and RI for IntQueue1 and IntQueue2.
     ### IntQueue1
 
     Abstraction Function:
-
+    AF(this) = A FIFO queue where the front of this.entries is the front
+    of this and the back of this.entries is the back of this (elements are in insertion
+    order, with the least-recently added at the front)
 
 
     Representation Invariant:
-
+    for all i, such that entries.get[i] != null and
+    entries != null
 
 
 
     ### IntQueue2
 
     Abstraction Function:
-
-
+    AF(this) = A FIFO queue contained by this.entries, where this.front is the index of the
+    first element of the queue, the element before an initialized element (such as 0, past
+    front and wrapping around to front) is the back of this, and size represents the
+    number of elements in the queue.
 
     Representation Invariant:
+    entries != null, size >= 0,
+    front >= 0 and front <= entries.length - 1
 
 
 
 
 b. Group the snapshots of IntQueue2's internal state into groups that have the same abstract state.
+    Internal State:
+    a. [1, 2]
+    b. [2, 3, 4]
+    c. [1, 2, 3]
+    d. [1, 2]
+    e. [1, 2, 3, 4]
+    f. [1, 2, 3]
+    g. [1, 2]
+    h. [2, 3, 4]
 
-
+    Group [1, 2]: has a, d, and g
+    Group [2, 3, 4]: has b and h
+    Group [1, 2, 3]: has c and f
+    Group [1, 2, 3, 4]: has e
 
 
 c. For each signature below, state and justify in 1-2 sentences (per part) whether the method or constructor
 could possibly expose the representation, given the information available. Explain any assumptions you made.
 
     1. `public int solveEquations(int x, int y, int z)`
-
-
+    This method does not expose the representation because it takes primitive data
+    types, int, as parameters and returns one as well. Primitive data types are
+    immutable.
 
     2. `public String[] decode(boolean slowly)`
-
-
+    This method could possibly expose the representation because it returns a
+    String[], an array, which is mutable.
 
     3. `private Date myBirthday()`
-
-
+    This method does not expose the representation because it is a private method
+    that would not be called by the client, but the implementer.
 
     4. `public String toString()`
-
-
+    This method does not expose the representation because it returns a String,
+    an immutable object.
 
     5. `public Iterator<Integer> elements()`
-
-
+    This method does expose the representation because it returns an Iterator<Integer>, and if
+    that Iterator references the main collection, the remove() method would change the
+    main collection's state.
 
     6. `public Deck(List<Card> cards)`
-
+    This method could contain representation exposure because if cards is referencing
+    the main collection/field, then the client can alter cards by referencing the same
+    object.
 
 
 
