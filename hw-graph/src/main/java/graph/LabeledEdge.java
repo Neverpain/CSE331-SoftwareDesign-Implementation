@@ -1,11 +1,11 @@
 package graph;
 
 /**
- * This class represents an edge with a label that points towards a
- * single node (or vertices).
+ * LabelEdge represents an edge with a label that points towards a
+ * single node (or vertex).
  *
  * Specification fields:
- * @spec.specfield destination : String  // The node(vertices) this edge is pointing towards.
+ * @spec.specfield destination : String  // The node(vertex) this edge is pointing towards.
  * @spec.specfield label : String  // The label of this edge.
  */
 public class LabeledEdge {
@@ -15,7 +15,7 @@ public class LabeledEdge {
      * @param d the destination of the LabeledEdge to be constructed
      * @param l the label of the LabeledEdge to be constructed
      * @spec.requires d != null && l != null
-     * @spec.effects Constructs a new LabeledEdge, with this.destination = d
+     * @spec.effects constructs a new LabeledEdge, with this.destination = d
      * and this.label = l
      */
     public LabeledEdge(String l, String d) {
