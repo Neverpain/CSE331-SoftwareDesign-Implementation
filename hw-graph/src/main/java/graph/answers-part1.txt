@@ -91,6 +91,12 @@ interface to a graph. If your design includes multiple classes or interfaces, ex
 included each one; if not, explain whether you considered additional classes and why you decided
 not to include them.
 
+I included addNode and addEdge in order to build the graph. ListNodes, listChildren, size,
+and isEmpty are included to provide the client information about the graph. ContainsNode and
+containsEdges are to prevent duplicate nodes and edges, as well as to find if they are in the
+graph. EntrySet is to give a visual view of the entire graph, which I thought might be useful.
+Connected is to see if two nodes are connected, which I also thought was useful (such as in the
+case of airplane flights).
 
 
 
