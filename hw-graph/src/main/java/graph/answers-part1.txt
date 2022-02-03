@@ -98,6 +98,12 @@ graph. EntrySet is to give a visual view of the entire graph, which I thought mi
 Connected is to see if two nodes are connected, which I also thought was useful (such as in the
 case of airplane flights).
 
+My design included multiple classes because I felt that the edges and nodes had enough information
+involved to create an object for them. The edges included a destination and a label,
+and the nodes included a label as well. I figured the best and simplest way to specify about all
+the details/information needed for the graph was to separate them.
+
+
 
 
 ## Part 3
