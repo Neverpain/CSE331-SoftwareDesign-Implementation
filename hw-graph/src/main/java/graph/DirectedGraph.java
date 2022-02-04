@@ -41,7 +41,7 @@ public class DirectedGraph {
      * @param v1 the start of the edge
      * @param v2 the destination of the edge
      * @spec.requires v1, v2, and l != null, v1 and v2 are contained in the graph,
-     * graphMap.size() > 1
+     * graphMap.size() &gt; 1
      * @spec.modifies this
      * @spec.effects adds a new edge to the map of the graph
      * @return true iff this graph does not already contain the edge (with the same
