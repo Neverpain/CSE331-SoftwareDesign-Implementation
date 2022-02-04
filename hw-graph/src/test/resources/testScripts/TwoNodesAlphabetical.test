@@ -1,0 +1,14 @@
+# Tests adding two nodes to a graph, and a pair of nodes will
+# print in alphabetical order
+
+# Create a graph
+CreateGraph graph1
+
+# Add two nodes
+AddedNode graph1 n1
+AddedNode graph1 n2
+
+# Print the nodes contained in the graph and outgoing edges to the nodes
+graph1 contains: n1 n2
+the children of n1 in graph1 are:
+the children of n2 in graph1 are:

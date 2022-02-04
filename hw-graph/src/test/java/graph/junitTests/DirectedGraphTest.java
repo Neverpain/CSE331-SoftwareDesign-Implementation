@@ -5,10 +5,6 @@ import graph.LabeledEdge;
 import graph.VertexNode;
 import org.junit.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
 import static org.junit.Assert.*;
 
 /** Unit tests for my DirectedGraph ADT implementation */
@@ -42,13 +38,18 @@ public class DirectedGraphTest {
     }
 
     @Test
-    public void testIsEmptyWhenConstructed() {
+    public void testIsEmptyOfEmptyGraph() {
         assertTrue(graph1.isEmpty());
     }
 
     @Test
-    public void testSizeWhenConstructed() {
+    public void testSizeOfEmptyGraph() {
         assertEquals(0, graph1.size());
+    }
+
+    @Test
+    public void testEntrySetOfEmptyGraph() {
+        //unsure of how to do without implementation
     }
 
     @Test (expected = IllegalStateException.class)
@@ -72,28 +73,28 @@ public class DirectedGraphTest {
     }
 
     @Test
-    public void testIsEmptyForNonEmptyGraph() {
+    public void testIsEmptyForTwoNodeGraph() {
         assertFalse(graph2.isEmpty());
     }
 
     @Test
-    public void testSizeWithNonEmptyGraph() {
+    public void testSizeWithTwoNodeGraph() {
         assertEquals(2, graph2.size());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test (expected = IllegalArgumentException.class)
     public void testAddingNullNode() {
         graph1.addNode(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testAddingNodeAlreadyContained() {
-        assertFalse(graph2.addNode("vertex1)"));
+        graph2.addNode("vertex1)");
     }
 
-    @Test
+    @Test (expected = IllegalArgumentException.class)
     public void testAddingEdgeAlreadyContained() {
-        assertFalse(graph2.addEdge(vertex1, vertex2, "edge1"));
+        graph2.addEdge(vertex1, vertex2, "edge1");
     }
 
     @Test
@@ -123,13 +124,38 @@ public class DirectedGraphTest {
     }
 
     @Test
+    public void testNumberOfEdgesBetweenVertex1andVertex2Reverse() {
+        assertEquals(2, graph2.numberOfEdges(vertex2, vertex1));
+    }
+
+    @Test
+    public void testNumberOfEdgesBetweenVertex1andVertex3() {
+        assertEquals(0, graph2.numberOfEdges(vertex1, vertex3));
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testNumberOfEdgesBetweenVertex1andNull() {
+        graph2.numberOfEdges(vertex1, null);
+    }
+
+    @Test
     public void testContainsNode() {
         assertTrue(graph2.containsNode(vertex1));
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testContainsNullNode() {
+        graph2.containsNode(null);
     }
 
     @Test
     public void testDoesNotContainNode() {
         assertFalse(graph2.containsNode(vertex3));
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testContainsNullEdge() {
+        graph2.containsEdge(new LabeledEdge(null, null, null));
     }
 
     @Test
@@ -161,6 +187,13 @@ public class DirectedGraphTest {
     public void testEntrySet() {
         //unsure how to do without adding the implementation
     }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testListChildrenOfNullNode() {
+        graph2.listChildren(null);
+    }
+
+
 
 }
 
