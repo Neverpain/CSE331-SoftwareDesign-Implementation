@@ -99,10 +99,10 @@ Connected is to see if two nodes are connected, which I also thought was useful 
 case of airplane flights).
 
 My design included multiple classes because I felt that the edges and nodes had enough information
-involved to create an object for them. The edges included a destination and a label,
-and the nodes included a label as well. I figured the best and simplest way to specify about all
-the details/information needed for the graph was to separate them.
-
+involved to create an object for them. Furthermore, it would be simpler to access their
+information using observers. The edges included a destination and a label, and the nodes included
+a label as well. I figured the best and simplest way to specify about all the details/information
+needed for the graph was to separate them.
 
 
 
@@ -112,5 +112,11 @@ the details/information needed for the graph was to separate them.
 What was your testing strategy for this assignment? How do your script tests and JUnit tests
 differ from each other (if they do), and why?
 
-
-
+My testing strategy for this assignment was using the 0, 1, 2 hint to create my script tests
+best as I could. I created a table (of nodes and tables) using the 0, 1, 2 hint and used that
+to create tests such as the empty graph or two nodes and two edges. I also expanded upon that
+by testing if there were multiple edges and different kinds of edges. From there, I thought
+the tests I had covered most of the possible behaviors using the commands we were given. Then,
+I switched to JUnit tests, which tested most of my methods and their exceptions and behaviors.
+They script tests and JUnit tests differ slightly from each other because JUnit tests can test
+exceptions that script tests cannot, which I had a lot to check for.

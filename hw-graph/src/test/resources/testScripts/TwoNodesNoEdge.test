@@ -1,0 +1,14 @@
+# Tests adding two nodes to a graph, and a pair of nodes with no
+# edges can be printed out
+
+# Create a graph
+CreateGraph graph1
+
+# Add two nodes
+AddNode graph1 n1
+AddNode graph1 n2
+
+# Print the nodes contained in the graph and incoming edges to the nodes
+ListNodes graph1
+ListChildren graph1 n1
+ListChildren graph1 n2

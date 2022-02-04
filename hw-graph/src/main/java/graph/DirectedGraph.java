@@ -7,7 +7,7 @@ import java.util.Set;
  * DirectedGraph represents a mutable, directed graph.
  *
  * Specification fields:
- * @spec.specfield graphMap : HashMap<VertexNode, HashSet<LabeledEdge>>  // Map of all of the
+ * @spec.specfield graphMap : {@literal Map<VertexNode(l), Set<LabeledEdge(l,d)>>} // Map of all the
  * nodes with their edges, which contain the destination nodes.
  *
  */
@@ -22,32 +22,32 @@ public class DirectedGraph {
     }
 
     /**
-     * Adds a given node to the graph if it is not already present.
+     * Creates a new node to put in the graph if it is not already present.
      *
-     * @param v new node to be added into the graph
-     * @spec.requires v != null
+     * @param l creates new node to be added into the graph
+     * @spec.requires l != null
      * @spec.modifies this
-     * @spec.effects adds new node, v, to the map of the graph
+     * @spec.effects adds new node to the map of the graph
      * @return true iff this graph does not already contain the node
      */
-    public boolean addNode(VertexNode v) {
+    public boolean addNode(String l) {
         throw new RuntimeException("DirectedGraph.addNode() is not yet implemented");
     }
 
     /**
-     * Adds a new edge to the graph if it is not already present. If either the destination
-     * node or the start node doesn't exist in the graph, creates a new node/nodes.
+     * Adds a new edge to the graph if it is not already present.
      *
-     * @param v1 start of the edge
-     * @param v2 destination of the edge
-     * @param s label of the edge
-     * @spec.requires v1, v2, and s != null
+     * @param l the label of the edge to be added
+     * @param v1 the start of the edge
+     * @param v2 the destination of the edge
+     * @spec.requires v1, v2, and l != null, v1 and v2 are contained in the graph,
+     * graphMap.size() > 1
      * @spec.modifies this
      * @spec.effects adds a new edge to the map of the graph
      * @return true iff this graph does not already contain the edge (with the same
-     * destination and start)
+     * destination, start, and label)
      */
-    public boolean addEdge(VertexNode v1, VertexNode v2, String s) {
+    public boolean addEdge(VertexNode v1, VertexNode v2, String l) {
         throw new RuntimeException("DirectedGraph.addEdge() is not yet implemented");
     }
 
@@ -95,12 +95,24 @@ public class DirectedGraph {
     }
 
     /**
+     * Finds out the number of edges connected between two nodes
+     *
+     * @param v1 the first node
+     * @param v2 the second node
+     * @spec.requires v1 != null and v2 != null
+     * @return the number of edges between v1 and v2
+     */
+    public int numberOfEdges(VertexNode v1, VertexNode v2) {
+        throw new RuntimeException("DirectedGraph.numberOfEdges() is not yet implemented");
+    }
+
+    /**
      * Finds out whether a node is connected to another node (there
      * are edges between them)
      *
      * @param v1 the first node
      * @param v2 the second node
-     * @spec.requires v1 != null && v2 != null
+     * @spec.requires v1 != null and v2 != null
      * @return true iff there are edges between the nodes given
      */
     public boolean connected(VertexNode v1, VertexNode v2) {

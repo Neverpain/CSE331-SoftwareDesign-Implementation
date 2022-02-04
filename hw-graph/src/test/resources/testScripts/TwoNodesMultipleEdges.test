@@ -1,0 +1,21 @@
+# Tests that multiple edges can be added to a graph, and that
+# a pair of nodes and a all edges connecting them
+# can be printed out
+
+# Create a graph
+CreateGraph graph1
+
+# Add two nodes
+AddNode graph1 n1
+AddNode graph1 n2
+
+# Add two edges
+AddEdge graph1 n1 n2 n1n2
+AddEdge graph1 n2 n1 n2n1
+AddEdge graph1 n1 n1 n1n1
+
+# Print the nodes contained in the graph and the
+# edges outgoing from the parentNodes
+ListNodes graph1
+ListChildren graph1 n1
+ListChildren graph1 n2

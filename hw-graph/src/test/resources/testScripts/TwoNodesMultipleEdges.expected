@@ -1,0 +1,21 @@
+# Tests that multiple edges can be added to a graph, and that
+# a pair of nodes and a all edges connecting them
+# can be printed out
+
+# Create a graph
+create a graph graph1
+
+# Add two nodes
+added node n1 to graph1
+added node n2 to graph1
+
+# Add two edges
+added edge n1n2 from n1 to n2 to graph1
+added edge n2n1 from n2 to n1 to graph1
+added edge n1n1 from n1 to n1 to graph1
+
+# Print the nodes contained in the graph and the
+# edges outgoing from the parentNodes
+graph1 contains: n1 n2
+the children of n1 in graph1 are: n2(n1n2), n1(n1n1)
+the children of n2 in graph1 are: n1(n2n1)
