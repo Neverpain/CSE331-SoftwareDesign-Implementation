@@ -8,33 +8,45 @@ import static org.junit.Assert.*;
 /** Unit tests for my LabeledEdge ADT implementation */
 public class LabeledEdgeTest {
 
-    private final VertexNode vertex1 = new VertexNode("testCase");
-    private final VertexNode vertex2 = new VertexNode("testCase");
-
-    private final LabeledEdge edge1 = new LabeledEdge(vertex1, vertex2, "edge1");
-    private final LabeledEdge edge2 = new LabeledEdge(vertex1, vertex2, "edge1");
-    private final LabeledEdge edge3 = new LabeledEdge(vertex1, vertex2, "edge12");
+    private final LabeledEdge edge1 = new LabeledEdge("start1", "destination1", "edge1");
+    private final LabeledEdge edge2 = new LabeledEdge("start1", "destination1", "edge1");
+    private final LabeledEdge edge3 = new LabeledEdge("start1", "destination1", "edge12");
 
     @Test (expected = IllegalArgumentException.class)
     public void testsNullArgConstructor() {
-        new LabeledEdge(null, vertex2, "null1");
-        new LabeledEdge(vertex1, null, "null2");
-        new LabeledEdge(vertex1, vertex2, null);
+        new LabeledEdge(null, "destination1", "label1");
+        new LabeledEdge("start2", null, "label2");
+        new LabeledEdge("start3", "destination3", null);
     }
 
     @Test
-    public void testGetDestination() {
-        assertEquals(vertex2, edge1.getDestination());
+    public void testGetDestinationTrue() {
+        assertEquals("destination1", edge1.getDestination());
     }
 
     @Test
-    public void testGetStart() {
-        assertEquals(vertex1, edge1.getStart());
+    public void testGetDestinationFalse() {
+        assertNotEquals("destinationFalse", edge1.getDestination());
     }
 
     @Test
-    public void testGetLabel() {
+    public void testGetStartTrue() {
+        assertEquals("start1", edge1.getStart());
+    }
+
+    @Test
+    public void testGetStartFalse() {
+        assertNotEquals("startFalse", edge1.getStart());;
+    }
+
+    @Test
+    public void testGetLabelTrue() {
         assertEquals("edge1", edge1.getLabel());
+    }
+
+    @Test
+    public void testGetLabelFalse() {
+        assertNotEquals("edgeFalse", edge1.getStart());;
     }
 
     @Test

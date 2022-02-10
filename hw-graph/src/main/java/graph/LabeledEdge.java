@@ -6,42 +6,78 @@ package graph;
  *
  * Specification fields:
  * @spec.specfield destination : String  // The node(vertex) this edge is pointing towards.
- * @spec.specfield start : String  // The node(vertex) this edge is coming from.
  * @spec.specfield label : String  // The label of this edge.
  */
 public class LabeledEdge {
 
+    // Abstraction Function:
+    //      AF(this) = labeled edge e such that
+    //          e.destination = this.destination
+    //          e.label = this.label
+    //
+    // Representation Invariant for every LabeledEdge l:
+    //      label != null && destination != nul
+
+    /**
+     * The node the labeled edge points at
+     */
+    private final String destination;
+
+    /**
+     * Label of the edge
+     */
+    private final String label;
+
+    /**
+     * The node the labeled edge starts at
+     */
+    private final String start;
+
     /**
      * Constructs a new LabeledEdge.
      *
-     * @param l the start of the LabeledEdge to be constructed
-     * @param d the destination of the LabeledEdge to be constructed
-     * @param s the start of the LabeledEdge to be constructed
+     * @param s the start of the LabeledEdge
+     * @param l the label of the LabeledEdge
+     * @param d the destination of the LabeledEdge
      * @spec.requires d != null and l != null
      * @spec.effects constructs a new LabeledEdge, with this.destination = d,
-     * this.label = l, and this.start = s
+     * this.label = l, this.start = s
      */
     public LabeledEdge(String s, String d, String l) {
-        throw new RuntimeException("LabeledEdge(String l, String d) is not " +
-        "yet implemented");
+        if (l == null || d == null || s == null) {
+            throw new IllegalArgumentException("Labeled edges cannot have null values");
+        }
+        destination = d;
+        label = l;
+        start = s;
+        checkRep();
     }
 
     /**
-     * Gets the start of this LabeledEdge.
-     *
-     * @return returns the start of this LabeledEdge
+     * Throws an exception if rep invariant is violated
      */
-    public String getStart() {
-        throw new RuntimeException("LabeledEdge.getStart() is not yet implemented");
-    }
+     private void checkRep() {
+         assert (destination != null);
+         assert (label != null);
+         assert (start != null);
+     }
 
     /**
-     * Gets the label of this LabeledEdge.
+     * Gets the destination node of this LabeledEdge.
      *
      * @return returns the destination of this LabeledEdge
      */
     public String getDestination() {
-        throw new RuntimeException("LabeledEdge.getDestination() is not yet implemented");
+        return destination;
+    }
+
+    /**
+     * Gets the start node of this LabeledEdge.
+     *
+     * @return returns the start of this LabeledEdge
+     */
+    public String getStart() {
+        return start;
     }
 
     /**
@@ -50,19 +86,23 @@ public class LabeledEdge {
      * @return returns the label of this LabeledEdge
      */
     public String getLabel() {
-        throw new RuntimeException("LabeledEdge.getLabel() is not yet implemented");
+        return label;
     }
 
     /**
      * Standard equality operation.
      *
-     * @param obj object to be compared to this LabeledEdge
+     * @param o object to be compared to this LabeledEdge
      * @return true iff obj is an instance of a LabeledEdge and this and obj
      * represent the same LabeledEdge (same destination, same start, and same label)
      */
     @Override
-    public boolean equals(Object obj) {
-        throw new RuntimeException("LabeledEdge.equals() is not yet implemented");
+    public boolean equals(Object o) {
+        if (!(o instanceof LabeledEdge)) {
+            return false;
+        }
+        LabeledEdge e = (LabeledEdge) o;
+        return hashCode() == o.hashCode();
     }
 
     /**
@@ -72,6 +112,6 @@ public class LabeledEdge {
      */
     @Override
     public int hashCode() {
-        throw new RuntimeException("LabeledEdge.hashCode() is not yet implemented");
+        return label.hashCode() + destination.hashCode() + start.hashCode();
     }
 }

@@ -20,18 +20,21 @@ complexity, or ease of implementation).
 A collection of nodes and a collection of edges:
    An advantage of this Graph representation is 0(1) time complexity to add a new node
    or a new edge to either collections.
-   A disadvantage of this Graph representation is
+   A disadvantage of this Graph representation is the ease of implementation since
+   one would have to create code to connect nodes to their edges when the other
+   representations include them.
 
 An adjacency list, in which each node is associated with a list of its outgoing edges:
-   An advantage of this Graph representation is 0(1) time complexity to add a new node
-   or a new edge.
-   A disadvantage of this Graph representation is
+   An advantage of this Graph representation is 0(1) time complexity to add a new node.
+   A disadvantage of this Graph representation is 0(n + e) time complexity for removing
+   a node, with n being the total number of nodes and e being the total number of edges.
 
 An adjacency matrix, which explicitly represents, for every pair ⟨A,B⟩ of nodes, whether there
 is a link from A to B, and how many:
    An advantage of this Graph representation is 0(1) time complexity for searching for the
-   number of edges because you can use A and B to find of edges
-   A disadvantage of this Graph representation is
+   number of edges because you can use A and B to find edgesOf[A][B].
+   A disadvantage of this Graph representation is 0(n^2) time complexity for removing a node, w
+   ith n being the number of nodes in the array.
 
 
 
@@ -39,6 +42,14 @@ is a link from A to B, and how many:
 2. In two to three sentences, describe the representation you chose and explain why you
 chose it. If you chose to use a different representation than one of the three we described
 above, be sure to list its advantages and disadvantages, too.
+
+I chose a hashmap representation of the graph with the "keys" being nodes and the "values" being
+a set of an object I created, LabeledEdge, which includes the node it is going towards and a
+label as fields.
+An advantage of this Graph representation is 0(1) time complexity for searching if the graph
+contains a node.
+A disadvantage of this Graph representation is the ease of implementation where I would have
+to create a new class to represent the LabeledEdges.
 
 
 

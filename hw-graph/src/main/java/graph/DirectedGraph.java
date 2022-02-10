@@ -1,10 +1,11 @@
 package graph;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
- * DirectedGraph represents a mutable, directed graph. It is a graph containing
+ * DirectedGraph represents a mutable, directed graph. It is a graph containing nodes
+ * and LabelEdges which represent the vertices and the edges connecting them on a
+ * graph.
  *
  * Specification fields:
  * @spec.specfield graphMap : {@literal Map<String(l), Set<LabeledEdge(l,d)>>} // Map of all the
@@ -12,87 +13,165 @@ import java.util.Set;
  *
  */
 public class DirectedGraph {
+
+    // Abstraction Function:
+    //      AF(this) = directed map m such that
+    //          {} if graph is empty
+    //          nodes in this = this.graphMap.keySet()
+    //          edges outgoing from node n = this.graphMap.getKey(n)
+    //
+    // Representation Invariant for every DirectedGraph g,
+    //      graphMap != null
+    //      && nodes in this != null
+    //      && edges in this != null
+
+    /**
+     * Holds all the nodes and outgoing edges in this
+     */
+    private final Map<String, Set<LabeledEdge>> graphMap;
+
+    private static final boolean bigTest = false;
+
     /**
      * Constructs a new empty DirectedGraph.
      *
      * @spec.effects constructs a new empty DirectedGraph
-      */
+     */
     public DirectedGraph() {
-        throw new RuntimeException("DirectedGraph() is not yet implemented");
+        graphMap = new HashMap<>();
+        checkRep();
+    }
+
+    /**
+     * Throws an exception if rep invariant is violated
+     */
+    private void checkRep() {
+        assert (graphMap != null);
+
+        for (String key : graphMap.keySet()) {
+            assert (key != null);
+        }
+
+        if (bigTest) {
+            for (Set<LabeledEdge> set : graphMap.values()) {
+                for (LabeledEdge value : set) {
+                    assert (value != null);
+                }
+            }
+        }
+
     }
 
     /**
      * Creates a new node to put in the graph if it is not already present.
      *
      * @param l creates new node to be added into the graph
+     * @return true iff this graph does not already contain the node
      * @spec.requires l != null
      * @spec.modifies this
      * @spec.effects adds new node to the map of the graph
-     * @return true iff this graph does not already contain the node
      */
     public boolean addNode(String l) {
-        throw new RuntimeException("DirectedGraph.addNode() is not yet implemented");
+        checkRep();
+        if (l == null) {
+            throw new IllegalArgumentException();
+        }
+        //Checks if graph contains same node
+        if (!graphMap.containsKey(l)) {
+            graphMap.put(l, new HashSet<>());
+            return true;
+        }
+        return false;
     }
 
     /**
      * Adds a new edge to the graph if it is not already present.
      *
-     * @param l the label of the edge to be added
+     * @param l  the label of the edge to be added
      * @param v1 the start of the edge
      * @param v2 the destination of the edge
+     * @return true iff this graph does not already contain the edge (with the same
+     * destination, start, and label)
      * @spec.requires v1, v2, and l != null, v1 and v2 are contained in the graph,
      * graphMap.size() &gt; 1
      * @spec.modifies this
      * @spec.effects adds a new edge to the map of the graph
-     * @return true iff this graph does not already contain the edge (with the same
-     * destination, start, and label)
      */
     public boolean addEdge(String v1, String v2, String l) {
-        throw new RuntimeException("DirectedGraph.addEdge() is not yet implemented");
+        checkRep();
+        if (v1 == null || v2 == null || l == null) {
+            throw new IllegalArgumentException();
+        }
+        // Checks if both nodes are contained in graph, also checks size of this since
+        // a size of 1 assumes that both nodes are not contained
+        if (!graphMap.containsKey(v1) || !graphMap.containsKey(v2) || graphMap.size() <= 1) {
+            throw new IllegalStateException();
+        }
+
+        LabeledEdge newEdge = new LabeledEdge(v1, v2, l);
+        //Checks if graph contains same edge
+        if (!graphMap.get(v1).contains(newEdge)) {
+            graphMap.get(v1).add(newEdge);
+            return true;
+        }
+        return false;
     }
 
     /**
      * Lists the child nodes of a given node
      *
      * @param v a node contained by the graph
+     * @return a set containing all the child nodes of v (an empty set if there are
+     * no children)
      * @spec.requires v != null, v is contained in graph
-     * @return a set containing all the child nodes of v, if a node has no children //COME BACK PLS
-     *
      */
     public Set<String> listChildren(String v) {
-        throw new RuntimeException("DirectedGraph.listChildren() is not yet implemented");
+        if (v != null) {
+            throw new IllegalArgumentException();
+        }
+        if (!graphMap.containsKey(v)) {
+            throw new IllegalArgumentException();
+        }
+
+        Set<String> children = new HashSet<>();
+        //Adds all the children of node, v, to the new set
+        for (LabeledEdge e : graphMap.get(v)) {
+            children.add(e.getDestination());
+        }
+        return children;
     }
 
     /**
      * Lists all the nodes contained in the graph
      *
-     * @spec.requires this != null and is not empty
      * @return a set containing all the nodes in the graph
+     * @spec.requires this != null and is not empty
      */
     public Set<String> listNodes() {
-        throw new RuntimeException("DirectedGraph.listNodes() is not yet implemented");
+        Set<String> nodes = new HashSet<>();
+        for (String v : graphMap.keySet()) {
+            nodes.add(v);
+        }
+        return nodes;
     }
 
     /**
      * Finds out whether the graph contains a given node or not
      *
      * @param v the node to be searched for
-     * @spec.requires v != null
      * @return true iff the node, v, is present within the graph
+     * @spec.requires v != null
      */
     public boolean containsNode(String v) {
-        throw new RuntimeException("DirectedGraph.containsNode() is not yet implemented");
-    }
-
-    /**
-     * Finds out whether the graph contains a given edge (by label) or not
-     *
-     * @param l the edge to be searched for by label
-     * @spec.requires l != null
-     * @return true iff the edge, v, is present within the graph
-     */
-    public boolean containsEdge(String l) {
-        throw new RuntimeException("DirectedGraph.containsEdge() is not yet implemented");
+        if (v == null) {
+            throw new IllegalArgumentException();
+        }
+        for (String v2 : graphMap.keySet()) {
+            if (v.equals(v2)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -100,11 +179,29 @@ public class DirectedGraph {
      *
      * @param v1 the first node
      * @param v2 the second node
-     * @spec.requires v1 != null and v2 != null
      * @return the number of edges between v1 and v2
+     * @spec.requires v1 != null and v2 != null
      */
     public int numberOfEdges(String v1, String v2) {
-        throw new RuntimeException("DirectedGraph.numberOfEdges() is not yet implemented");
+       if (v1 == null || v2 == null) {
+           throw new IllegalArgumentException();
+       }
+
+       int numberOfEdges = 0;
+       //Gets the edges outgoing from v1
+       for (LabeledEdge e: graphMap.get(v1)) {
+           if (e.getDestination().equals(v2)) {
+               numberOfEdges++;
+           }
+       }
+        //Gets the edges outgoing from v2
+       for (LabeledEdge e: graphMap.get(v2)) {
+           if (e.getDestination().equals(v1)) {
+                numberOfEdges++;
+           }
+       }
+       return numberOfEdges;
+
     }
 
     /**
@@ -113,11 +210,33 @@ public class DirectedGraph {
      *
      * @param v1 the first node
      * @param v2 the second node
-     * @spec.requires v1 != null and v2 != null
      * @return true iff there are edges between the nodes given
+     * @spec.requires v1 != null and v2 != null, v1 and v2 must
+     * be contained in the graph
      */
     public boolean connected(String v1, String v2) {
-        throw new RuntimeException("DirectedGraph.connected() is not yet implemented");
+        if (v1 == null || v2 == null) {
+            throw new IllegalArgumentException();
+        }
+
+        if (!graphMap.containsKey(v1) || !graphMap.containsKey(v2)) {
+            throw new IllegalStateException();
+        }
+
+        //Checks outgoing edges from v1
+        for (LabeledEdge e: graphMap.get(v1)) {
+            if (e.getDestination().equals(v2)) {
+                return true;
+            }
+        }
+
+        //Checks outgoing edges from v2
+        for (LabeledEdge e: graphMap.get(v2)) {
+            if (e.getDestination().equals(v1)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -126,7 +245,7 @@ public class DirectedGraph {
      * @return the number of nodes(vertices) in the graph
      */
     public int size() {
-        throw new RuntimeException("DirectedGraph.size() is not yet implemented");
+        return graphMap.size();
     }
 
     /**
@@ -135,6 +254,6 @@ public class DirectedGraph {
      * @return true iff the graph is empty
      */
     public boolean isEmpty() {
-        throw new RuntimeException("DirectedGraph.isEmpty() is not yet implemented");
+        return graphMap.isEmpty();
     }
 }
