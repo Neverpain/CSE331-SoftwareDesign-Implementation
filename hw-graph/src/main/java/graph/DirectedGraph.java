@@ -4,10 +4,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * DirectedGraph represents a mutable, directed graph.
+ * DirectedGraph represents a mutable, directed graph. It is a graph containing
  *
  * Specification fields:
- * @spec.specfield graphMap : {@literal Map<VertexNode(l), Set<LabeledEdge(l,d)>>} // Map of all the
+ * @spec.specfield graphMap : {@literal Map<String(l), Set<LabeledEdge(l,d)>>} // Map of all the
  * nodes with their edges, which contain the destination nodes.
  *
  */
@@ -47,18 +47,19 @@ public class DirectedGraph {
      * @return true iff this graph does not already contain the edge (with the same
      * destination, start, and label)
      */
-    public boolean addEdge(VertexNode v1, VertexNode v2, String l) {
+    public boolean addEdge(String v1, String v2, String l) {
         throw new RuntimeException("DirectedGraph.addEdge() is not yet implemented");
     }
 
     /**
-     * Lists the child nodes of a given VertexNode
+     * Lists the child nodes of a given node
      *
      * @param v a node contained by the graph
      * @spec.requires v != null, v is contained in graph
-     * @return a set containing all the child nodes of v
+     * @return a set containing all the child nodes of v, if a node has no children //COME BACK PLS
+     *
      */
-    public Set<VertexNode> listChildren(VertexNode v) {
+    public Set<String> listChildren(String v) {
         throw new RuntimeException("DirectedGraph.listChildren() is not yet implemented");
     }
 
@@ -68,7 +69,7 @@ public class DirectedGraph {
      * @spec.requires this != null and is not empty
      * @return a set containing all the nodes in the graph
      */
-    public Set<VertexNode> listNodes() {
+    public Set<String> listNodes() {
         throw new RuntimeException("DirectedGraph.listNodes() is not yet implemented");
     }
 
@@ -79,7 +80,7 @@ public class DirectedGraph {
      * @spec.requires v != null
      * @return true iff the node, v, is present within the graph
      */
-    public boolean containsNode(VertexNode v) {
+    public boolean containsNode(String v) {
         throw new RuntimeException("DirectedGraph.containsNode() is not yet implemented");
     }
 
@@ -90,7 +91,7 @@ public class DirectedGraph {
      * @spec.requires l != null
      * @return true iff the edge, v, is present within the graph
      */
-    public boolean containsEdge(LabeledEdge l) {
+    public boolean containsEdge(String l) {
         throw new RuntimeException("DirectedGraph.containsEdge() is not yet implemented");
     }
 
@@ -102,7 +103,7 @@ public class DirectedGraph {
      * @spec.requires v1 != null and v2 != null
      * @return the number of edges between v1 and v2
      */
-    public int numberOfEdges(VertexNode v1, VertexNode v2) {
+    public int numberOfEdges(String v1, String v2) {
         throw new RuntimeException("DirectedGraph.numberOfEdges() is not yet implemented");
     }
 
@@ -115,7 +116,7 @@ public class DirectedGraph {
      * @spec.requires v1 != null and v2 != null
      * @return true iff there are edges between the nodes given
      */
-    public boolean connected(VertexNode v1, VertexNode v2) {
+    public boolean connected(String v1, String v2) {
         throw new RuntimeException("DirectedGraph.connected() is not yet implemented");
     }
 
@@ -136,14 +137,4 @@ public class DirectedGraph {
     public boolean isEmpty() {
         throw new RuntimeException("DirectedGraph.isEmpty() is not yet implemented");
     }
-
-    /**
-     * Returns a set with the same elements as the graph.
-     *
-     * @return an unmodifiable set with the same elements as the graph
-     */
-    public Set<Map<VertexNode, Set<LabeledEdge>>> entrySet() {
-        throw new RuntimeException("DirectedGraph.isEmpty() is not yet implemented");
-    }
-
 }

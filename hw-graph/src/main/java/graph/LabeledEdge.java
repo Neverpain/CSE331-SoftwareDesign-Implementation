@@ -5,8 +5,8 @@ package graph;
  * single node (or vertex).
  *
  * Specification fields:
- * @spec.specfield destination : VertexNode  // The node(vertex) this edge is pointing towards.
- * @spec.specfield start : VertexNode  // The node(vertex) this edge is coming from.
+ * @spec.specfield destination : String  // The node(vertex) this edge is pointing towards.
+ * @spec.specfield start : String  // The node(vertex) this edge is coming from.
  * @spec.specfield label : String  // The label of this edge.
  */
 public class LabeledEdge {
@@ -21,7 +21,7 @@ public class LabeledEdge {
      * @spec.effects constructs a new LabeledEdge, with this.destination = d,
      * this.label = l, and this.start = s
      */
-    public LabeledEdge(VertexNode s, VertexNode d, String l) {
+    public LabeledEdge(String s, String d, String l) {
         throw new RuntimeException("LabeledEdge(String l, String d) is not " +
         "yet implemented");
     }
@@ -31,7 +31,7 @@ public class LabeledEdge {
      *
      * @return returns the start of this LabeledEdge
      */
-    public VertexNode getStart() {
+    public String getStart() {
         throw new RuntimeException("LabeledEdge.getStart() is not yet implemented");
     }
 
@@ -40,7 +40,7 @@ public class LabeledEdge {
      *
      * @return returns the destination of this LabeledEdge
      */
-    public VertexNode getDestination() {
+    public String getDestination() {
         throw new RuntimeException("LabeledEdge.getDestination() is not yet implemented");
     }
 

@@ -17,6 +17,22 @@ A few examples of possible Graph representations:
 representations listed above (for example, in terms of runtime complexity, space
 complexity, or ease of implementation).
 
+A collection of nodes and a collection of edges:
+   An advantage of this Graph representation is 0(1) time complexity to add a new node
+   or a new edge to either collections.
+   A disadvantage of this Graph representation is
+
+An adjacency list, in which each node is associated with a list of its outgoing edges:
+   An advantage of this Graph representation is 0(1) time complexity to add a new node
+   or a new edge.
+   A disadvantage of this Graph representation is
+
+An adjacency matrix, which explicitly represents, for every pair ⟨A,B⟩ of nodes, whether there
+is a link from A to B, and how many:
+   An advantage of this Graph representation is 0(1) time complexity for searching for the
+   number of edges because you can use A and B to find of edges
+   A disadvantage of this Graph representation is
+
 
 
 
