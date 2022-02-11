@@ -62,11 +62,28 @@ to create a new class to represent the LabeledEdges.
 1. Describe any new tests you added and why you added them, or why you feel that your original
 tests alone are sufficient.
 
+I feel that most of my original tests alone are sufficient because they cover all special cases
+and the details of the specifications. They test common special cases where something,
+such as the graph object or parameters, is empty or null. I also applied the (0, 1, 2) hint to my test to
+cover the > 0 subdomain (can't have negative amount of nodes) multiple times. Furthermore,
+I tested the parameters of my methods using the (0, 1, 2) test as well as reversing the parameters of some
+of my methods, such as connectedNodes, to see that it works properly both ways. My tests also
+keep in mind the representation of the graph and its expected behaviors.
 
-
+I revised some of my tests to fit some changes in specifications and split some tests up to test
+the same thing on multiple graphs. I did this to show that the behavior stays consistent.
 
 2. Did you make any changes to your specifications as you were implementing your Graph? (yes/no)
 If yes, describe your changes and why you made them.
+
+I made some changes to my specifications such as the listChildren method, applying a throw to
+some of my methods that had special requires specifications, and deleting my VertexNode ADT to
+hold each vertex. I deleted the VertexNode ADT from my graph specification because it was more
+simple to just use a String, since a node is essentially just a String. I made some of my
+methods throw an exception if an uncommon requirement, such as the graph size has to be greater
+than 1 or the graph must contain the nodes parameters, was not held because a client can't
+easily know that. I changed my listChildren method, so it returns the outgoing edges
+rather than the nodes to be able to use it for the ListChildren method in the GraphTestDriver.
 
 
 

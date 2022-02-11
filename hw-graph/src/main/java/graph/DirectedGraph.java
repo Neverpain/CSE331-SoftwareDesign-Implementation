@@ -206,6 +206,8 @@ public class DirectedGraph {
      * @return true iff there are edges between the nodes given
      * @spec.requires v1 != null and v2 != null, v1 and v2 must
      * be contained in the graph
+     * @throws IllegalStateException if v1 or v2 are not contained
+     * in the graph
      */
     public boolean connected(String v1, String v2) {
         if (v1 == null || v2 == null) {
