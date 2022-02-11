@@ -71,6 +71,7 @@ public class LabeledEdge {
      * @return returns the destination of this LabeledEdge
      */
     public String getDestination() {
+        checkRep();
         return destination;
     }
 
@@ -80,6 +81,7 @@ public class LabeledEdge {
      * @return returns the start of this LabeledEdge
      */
     public String getStart() {
+        checkRep();
         return start;
     }
 
@@ -89,6 +91,7 @@ public class LabeledEdge {
      * @return returns the label of this LabeledEdge
      */
     public String getLabel() {
+        checkRep();
         return label;
     }
 
@@ -101,10 +104,12 @@ public class LabeledEdge {
      */
     @Override
     public boolean equals(Object o) {
+        checkRep();
         if (!(o instanceof LabeledEdge)) {
             return false;
         }
         LabeledEdge e = (LabeledEdge) o;
+        checkRep();
         return hashCode() == o.hashCode();
     }
 
@@ -115,6 +120,7 @@ public class LabeledEdge {
      */
     @Override
     public int hashCode() {
+        checkRep();
         return label.hashCode() + destination.hashCode() + start.hashCode();
     }
 }

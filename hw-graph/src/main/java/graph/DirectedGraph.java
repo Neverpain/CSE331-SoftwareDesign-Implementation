@@ -76,12 +76,14 @@ public class DirectedGraph {
         if (l == null) {
             throw new IllegalArgumentException();
         }
+        boolean addedNode = false;
         //Checks if graph contains same node
         if (!graphMap.containsKey(l)) {
             graphMap.put(l, new HashSet<>());
-            return true;
+            addedNode = true;
         }
-        return false;
+        checkRep();
+        return addedNode;
     }
 
     /**
@@ -109,15 +111,17 @@ public class DirectedGraph {
             throw new IllegalStateException();
         }
 
+        boolean addedEdge = false;
         LabeledEdge newEdge = new LabeledEdge(v1, v2, l);
         //Checks if graph contains same edge
         if (!graphMap.get(v1).contains(newEdge)) {
             graphMap.get(v1).add(newEdge);
-            return true;
+            addedEdge = true;
         }
-        return false;
+        checkRep();
+        return addedEdge;
     }
-    /////////////Change tests
+
     /**
      * Lists the outgoing edges of a given node (includes the children nodes)
      *
@@ -128,13 +132,14 @@ public class DirectedGraph {
      * @throws IllegalArgumentException if v is not contained in the graph
      */
     public Set<LabeledEdge> listChildren(String v) {
+        checkRep();
         if (v == null) {
             throw new IllegalArgumentException();
         }
         if (!graphMap.containsKey(v)) {
             throw new IllegalArgumentException();
         }
-
+        checkRep();
         return new HashSet<>(graphMap.get(v));
     }
 
@@ -145,6 +150,7 @@ public class DirectedGraph {
      * @spec.requires this != null and is not empty
      */
     public Set<String> listNodes() {
+        checkRep();
         return new HashSet<>(graphMap.keySet());
     }
 
@@ -156,15 +162,18 @@ public class DirectedGraph {
      * @spec.requires v != null
      */
     public boolean containsNode(String v) {
+        checkRep();
         if (v == null) {
             throw new IllegalArgumentException();
         }
+        boolean containsNode = false;
         for (String v2 : graphMap.keySet()) {
             if (v.equals(v2)) {
-                return true;
+                containsNode = true;
             }
         }
-        return false;
+        checkRep();
+        return containsNode;
     }
 
     /**
@@ -176,10 +185,10 @@ public class DirectedGraph {
      * @spec.requires v1 != null and v2 != null
      */
     public int numberOfEdges(String v1, String v2) {
+       checkRep();
        if (v1 == null || v2 == null) {
            throw new IllegalArgumentException();
        }
-
        int numberOfEdges = 0;
        //Gets the edges outgoing from v1
        for (LabeledEdge e: graphMap.get(v1)) {
@@ -187,12 +196,13 @@ public class DirectedGraph {
                numberOfEdges++;
            }
        }
-        //Gets the edges outgoing from v2
+       //Gets the edges outgoing from v2
        for (LabeledEdge e: graphMap.get(v2)) {
            if (e.getDestination().equals(v1)) {
                 numberOfEdges++;
            }
        }
+       checkRep();
        return numberOfEdges;
 
     }
@@ -210,28 +220,29 @@ public class DirectedGraph {
      * in the graph
      */
     public boolean connected(String v1, String v2) {
+        checkRep();
         if (v1 == null || v2 == null) {
             throw new IllegalArgumentException();
         }
-
         if (!graphMap.containsKey(v1) || !graphMap.containsKey(v2)) {
             throw new IllegalStateException();
         }
-
+        boolean connected = false;
         //Checks outgoing edges from v1
         for (LabeledEdge e: graphMap.get(v1)) {
             if (e.getDestination().equals(v2)) {
-                return true;
+                connected = true;
             }
         }
 
         //Checks outgoing edges from v2
         for (LabeledEdge e: graphMap.get(v2)) {
             if (e.getDestination().equals(v1)) {
-                return true;
+                connected = true;
             }
         }
-        return false;
+        checkRep();
+        return connected;
     }
 
     /**
@@ -240,6 +251,7 @@ public class DirectedGraph {
      * @return the number of nodes(vertices) in the graph
      */
     public int size() {
+        checkRep();
         return graphMap.size();
     }
 
@@ -249,6 +261,7 @@ public class DirectedGraph {
      * @return true iff the graph is empty
      */
     public boolean isEmpty() {
+        checkRep();
         return graphMap.isEmpty();
     }
 }
