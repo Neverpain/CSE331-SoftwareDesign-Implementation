@@ -92,10 +92,11 @@ public class DirectedGraph {
      * @param v2 the destination of the edge
      * @return true iff this graph does not already contain the edge (with the same
      * destination, start, and label)
-     * @spec.requires v1, v2, and l != null, v1 and v2 are contained in the graph,
-     * graphMap.size() &gt; 1
+     * @spec.requires v1, v2, and l != null
      * @spec.modifies this
      * @spec.effects adds a new edge to the map of the graph
+     * @throws IllegalStateException if !(graphMap.size() &gt; 1) or v1 or v2
+     * are not contained in the graph
      */
     public boolean addEdge(String v1, String v2, String l) {
         checkRep();
@@ -116,29 +117,25 @@ public class DirectedGraph {
         }
         return false;
     }
-
+    /////////////Change tests
     /**
-     * Lists the child nodes of a given node
+     * Lists the outgoing edges of a given node (includes the children nodes)
      *
      * @param v a node contained by the graph
-     * @return a set containing all the child nodes of v (an empty set if there are
+     * @return a set containing all the outgoing edges of v (an empty set if there are
      * no children)
-     * @spec.requires v != null, v is contained in graph
+     * @spec.requires v != null
+     * @throws IllegalArgumentException if v is not contained in the graph
      */
-    public Set<String> listChildren(String v) {
-        if (v != null) {
+    public Set<LabeledEdge> listChildren(String v) {
+        if (v == null) {
             throw new IllegalArgumentException();
         }
         if (!graphMap.containsKey(v)) {
             throw new IllegalArgumentException();
         }
 
-        Set<String> children = new HashSet<>();
-        //Adds all the children of node, v, to the new set
-        for (LabeledEdge e : graphMap.get(v)) {
-            children.add(e.getDestination());
-        }
-        return children;
+        return new HashSet<>(graphMap.get(v));
     }
 
     /**
@@ -148,11 +145,7 @@ public class DirectedGraph {
      * @spec.requires this != null and is not empty
      */
     public Set<String> listNodes() {
-        Set<String> nodes = new HashSet<>();
-        for (String v : graphMap.keySet()) {
-            nodes.add(v);
-        }
-        return nodes;
+        return new HashSet<>(graphMap.keySet());
     }
 
     /**

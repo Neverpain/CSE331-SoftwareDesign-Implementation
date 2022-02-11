@@ -1,12 +1,14 @@
 package graph.junitTests;
 
 import graph.LabeledEdge;
-import graph.VertexNode;
 import org.junit.*;
 import static org.junit.Assert.*;
+import org.junit.Rule;
+import org.junit.rules.Timeout;
 
 /** Unit tests for my LabeledEdge ADT implementation */
 public class LabeledEdgeTest {
+    @Rule public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
 
     private final LabeledEdge edge1 = new LabeledEdge("start1", "destination1", "edge1");
     private final LabeledEdge edge2 = new LabeledEdge("start1", "destination1", "edge1");

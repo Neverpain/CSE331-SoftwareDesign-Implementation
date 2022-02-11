@@ -6,11 +6,9 @@ import static org.junit.Assert.*;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 
-/** Unit tests for my DirectedGraph ADT implementation
- * @Rule public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
- */
-
+/** Unit tests for my DirectedGraph ADT implementation */
 public class DirectedGraphTest {
+    @Rule public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
 
     //Constructed DirectedGraph instance that is empty
     private final DirectedGraph graph1 = new DirectedGraph();
@@ -51,10 +49,16 @@ public class DirectedGraphTest {
         graph2.addEdge("v1", "v2", "l1");
     }
 
+    @Test (expected = IllegalStateException.class)
+    public void testAddingEdgeToSameNodeInOneNodeGraph() {
+        graph2.addEdge("v1", "v1", "l1");
+    }
+
     @Test
     public void testSizeToOneNodeGraph() {
         assertEquals(1, graph2.size());
     }
+
 
     @Test
     public void testSizeWithTwoNodeGraph() {
@@ -194,6 +198,11 @@ public class DirectedGraphTest {
     @Test (expected = IllegalArgumentException.class)
     public void testListChildrenOfNullNode() {
         graph2.listChildren(null);
+    }
+
+    @Test
+    public void testAddingEdgeToSameNodeInTwoNodeGraph() {
+        assertTrue(graph3.addEdge("v1", "v1", "l1"));
     }
 }
 

@@ -2,7 +2,7 @@
 # graph can be printed out (which should be empty)
 
 # Create a graph
-created graph1
+created graph graph1
 
 # Prints the nodes contained in the graph
-graph contains:
+graph1 contains:

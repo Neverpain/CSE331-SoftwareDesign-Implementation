@@ -8,7 +8,7 @@ CreateGraph graph1
 AddNode graph1 n1
 AddNode graph1 n2
 
-# Print the nodes contained in the graph and incoming edges to the nodes
+# Print the nodes contained in the graph and outgoing edges to the nodes
 ListNodes graph1
 ListChildren graph1 n1
 ListChildren graph1 n2

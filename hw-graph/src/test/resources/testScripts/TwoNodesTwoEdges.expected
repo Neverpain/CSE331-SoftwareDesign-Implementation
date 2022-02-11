@@ -3,15 +3,15 @@
 # can be printed out
 
 # Create a graph
-create a graph graph1
+created graph graph1
 
 # Add two nodes
 added node n1 to graph1
 added node n2 to graph1
 
 # Add two edges
-added edge n1n2 from n1 to n2 to graph1
-added edge n2n1 from n2 to n1 to graph1
+added edge n1n2 from n1 to n2 in graph1
+added edge n2n1 from n2 to n1 in graph1
 
 # Print the nodes contained in the graph and the
 # edges outgoing from the parentNodes

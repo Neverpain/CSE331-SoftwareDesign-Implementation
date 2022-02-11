@@ -14,8 +14,10 @@ package graph.scriptTestRunner;
 import graph.DirectedGraph;
 import graph.LabeledEdge;
 
+import java.awt.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * This class implements a testing driver which reads test scripts
@@ -189,10 +191,20 @@ public class GraphTestDriver {
     private void listChildren(String graphName, String parentName) {
         DirectedGraph graph = graphs.get(graphName);
         String result = "the children of " + parentName + " in " + graphName + " are:";
-        Set<String> nodes = new TreeSet<>(graph.listChildren(parentName));
-        Set<LabeledEdge> edges = new TreeSet<>()
-        for (String n : nodes) {
-            result += " " + n;
+        Set<LabeledEdge> edges = new TreeSet<>(new Comparator<LabeledEdge>() {
+            @Override
+            public int compare(LabeledEdge e1, LabeledEdge e2) {
+                if(!(e1.getDestination().equals(e2.getDestination())))
+                    return e1.getDestination().compareTo(e2.getDestination());
+                if (!(e1.getLabel().equals(e2.getLabel()))) {
+                    return e1.getLabel().compareTo(e2.getLabel());
+                }
+                return 0;
+            }
+        });
+        edges.addAll(graph.listChildren(parentName));
+        for (LabeledEdge e : edges) {
+            result += " " + e.getDestination() + "(" + e.getLabel() +")";
         }
         output.println(result);
     }
