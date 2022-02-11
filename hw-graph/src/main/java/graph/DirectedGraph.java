@@ -70,6 +70,7 @@ public class DirectedGraph {
      * @spec.requires l != null
      * @spec.modifies this
      * @spec.effects adds new node to the map of the graph
+     * @throws IllegalArgumentException if l == null
      */
     public boolean addNode(String l) {
         checkRep();
@@ -99,6 +100,7 @@ public class DirectedGraph {
      * @spec.effects adds a new edge to the map of the graph
      * @throws IllegalStateException if !(graphMap.size() &gt; 1) or v1 or v2
      * are not contained in the graph
+     * @throws IllegalArgumentException if v1, v2, or l == null
      */
     public boolean addEdge(String v1, String v2, String l) {
         checkRep();
@@ -130,6 +132,7 @@ public class DirectedGraph {
      * no children)
      * @spec.requires v != null
      * @throws IllegalArgumentException if v is not contained in the graph
+     * @throws IllegalArgumentException if v == null
      */
     public Set<LabeledEdge> listChildren(String v) {
         checkRep();
@@ -160,6 +163,7 @@ public class DirectedGraph {
      * @param v the node to be searched for
      * @return true iff the node, v, is present within the graph
      * @spec.requires v != null
+     * @throws IllegalArgumentException if v == null
      */
     public boolean containsNode(String v) {
         checkRep();
@@ -183,6 +187,7 @@ public class DirectedGraph {
      * @param v2 the second node
      * @return the number of edges between v1 and v2
      * @spec.requires v1 != null and v2 != null
+     * @throws IllegalArgumentException if v1 or v2 == null
      */
     public int numberOfEdges(String v1, String v2) {
        checkRep();
@@ -218,6 +223,7 @@ public class DirectedGraph {
      * be contained in the graph
      * @throws IllegalStateException if v1 or v2 are not contained
      * in the graph
+     * @throws IllegalArgumentException if v1 or v2 == null
      */
     public boolean connected(String v1, String v2) {
         checkRep();
