@@ -9,6 +9,7 @@ import java.util.Comparator;
  *
  * Specification fields:
  * @spec.specfield destination : String  // The node(vertex) this edge is pointing towards.
+ * @spec.specfield start : String // The node where this edge starts
  * @spec.specfield label : String  // The label of this edge.
  */
 public class LabeledEdge {
