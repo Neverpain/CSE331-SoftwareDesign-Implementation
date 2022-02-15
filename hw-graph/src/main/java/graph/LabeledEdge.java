@@ -12,7 +12,7 @@ import java.util.Comparator;
  * @spec.specfield start : String // The node where this edge starts
  * @spec.specfield label : String  // The label of this edge.
  */
-public class LabeledEdge {
+public class LabeledEdge implements Comparable<LabeledEdge>{
 
     // Abstraction Function:
     //      AF(this) = labeled edge e such that
@@ -123,5 +123,23 @@ public class LabeledEdge {
     public int hashCode() {
         checkRep();
         return label.hashCode() + destination.hashCode() + start.hashCode();
+    }
+
+    /**
+     * Compares two given nodes
+     *
+     * @param e second labeled edge to be compared
+     * @return a positive int if e1 &gt; e2, a negative int if e1 &lt; e2, or
+     * zero if they are both "equal"
+     */
+
+    @Override
+    public int compareTo(LabeledEdge e) {
+        if(!(this.getDestination().equals(e.getDestination())))
+            return this.getDestination().compareTo(e.getDestination());
+        if (!(this.getLabel().equals(e.getLabel()))) {
+            return this.getLabel().compareTo(e.getLabel());
+        }
+        return 0;
     }
 }

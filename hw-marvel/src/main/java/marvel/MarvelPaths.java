@@ -24,7 +24,7 @@ public class MarvelPaths {
      * @throws FileNotFoundException if filename is not found
      * @spec.requires filename != null
      * @spec.modifies this
-     * @spec.effects constructs a new DirectedGraph from given files
+     * @spec.effects  fills this with nodes and edges from information in given files
      */
     public static void newGraph(String filename) throws FileNotFoundException {
         if (filename == null) {
@@ -46,7 +46,13 @@ public class MarvelPaths {
 
     public static void BFS(String start, String destination) {
         Queue<String> path = new LinkedList<>();
-           Map<String, List<LabeledEdge>> allPaths = new HashMap<>();
+        Map<String, Set<LabeledEdge>> allPaths = new HashMap<>();
+        path.add(start);
+        allPaths.put(destination, new TreeSet<>();
+
+        while (!path.isEmpty()) {
+            path.
+        }
 
     }
 }
