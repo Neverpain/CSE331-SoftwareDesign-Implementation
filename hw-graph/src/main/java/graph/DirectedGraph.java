@@ -65,7 +65,7 @@ public class DirectedGraph {
     /**
      * Creates a new node to put in the graph if it is not already present.
      *
-     * @param l creates new node to be added into the graph
+     * @param l label of the node to be added
      * @return true iff this graph does not already contain the node
      * @spec.requires l != null
      * @spec.modifies this
