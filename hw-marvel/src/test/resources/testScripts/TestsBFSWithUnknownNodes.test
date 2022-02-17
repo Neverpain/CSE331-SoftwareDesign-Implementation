@@ -1,0 +1,18 @@
+# Tests output of finding path on nodes that are not contained
+# within the dataset, prints the node not contained
+
+CreateGraph g
+
+AddNode g n1
+
+FindPath g n1 x
+
+FindPath g x n1
+
+FindPath g x y
+
+FindPath g y x
+
+FindPath g y y
+
+

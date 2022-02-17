@@ -1,0 +1,14 @@
+# Tests the makeGraph method on the courses file to see that it is
+# built correctly, prints out the paths of several nodes
+
+LoadGraph g courses.csv
+
+FindPath g cse142 cse143
+
+FindPath g math124 math124
+
+FindPath g cse142 math124
+
+FindPath g eng101 cse143
+
+FindPath g cse143 eng101

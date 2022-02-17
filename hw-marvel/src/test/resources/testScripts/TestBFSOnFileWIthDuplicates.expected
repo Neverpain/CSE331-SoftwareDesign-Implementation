@@ -1,0 +1,12 @@
+# Tests that the makeGraph method on a given file with duplicate lines does not
+# contain two of the same nodes or reflexive edges, prints out paths to check
+
+loaded graph g
+
+path from n1 to n1:
+
+path from n1 to n2:
+n1 to n2 via same
+
+path from n2 to n1:
+n2 to n1 via same

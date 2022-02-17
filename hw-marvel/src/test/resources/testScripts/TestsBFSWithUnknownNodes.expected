@@ -1,0 +1,19 @@
+# Tests output of finding path on nodes that are not contained
+# within the dataset, prints the node not contained
+
+created graph g
+
+added node n1 to g
+
+unknown: x
+
+unknown: x
+
+unknown: x
+unknown: y
+
+unknown: y
+unknown: x
+
+unknown: y
+unknown: y

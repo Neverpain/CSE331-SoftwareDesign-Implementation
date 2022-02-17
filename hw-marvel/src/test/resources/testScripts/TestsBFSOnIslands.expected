@@ -1,0 +1,22 @@
+# Tests the makeGraph method on the islands file to see that it is
+# built correctly, prints out paths of some nodes
+
+loaded graph g
+
+path from Victoria to Java:
+no path found
+
+path from Java to Victoria:
+no path found
+
+path from Honshu to Borneo:
+no path found
+
+path from Baffin to Honshu:
+no path found
+
+path from Java to Greenland:
+no path found
+
+path from Java to Java:
+

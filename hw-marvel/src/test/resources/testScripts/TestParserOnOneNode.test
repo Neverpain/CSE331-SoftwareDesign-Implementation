@@ -1,0 +1,8 @@
+# Tests that the makeGraph method properly creates a one node
+# graph with no edges or anything, prints it out
+
+LoadGraph g oneNodeGraph.csv
+
+ListNodes g
+ListChildren g n1
+

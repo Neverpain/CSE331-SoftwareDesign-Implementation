@@ -1,0 +1,8 @@
+# Tests that the makeGraph method properly creates the nodes with edges
+# going both directions, prints out path between both
+
+LoadGraph g twoNodeGraph.csv
+
+FindPath g n1 n2
+
+FindPath g n2 n1

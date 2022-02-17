@@ -1,0 +1,13 @@
+# Tests the findPath method from a node, n1, to another node, n4, that has two same
+# length paths and prints out the most alphabetical path, edges added in reverse
+
+created graph g
+
+added node n1 to g
+added node n2 to g
+
+added edge B from n1 to n2 in g
+added edge A from n1 to n2 in g
+
+path from n1 to n2:
+n1 to n2 via A

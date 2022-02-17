@@ -1,0 +1,10 @@
+# Tests that the makeGraph method on a given file with duplicate lines does not
+# contain two of the same nodes or reflexive edges, prints out paths to check
+
+LoadGraph g duplicateGraph.csv
+
+FindPath g n1 n1
+
+FindPath g n1 n2
+
+FindPath g n2 n1

@@ -1,0 +1,9 @@
+# Tests the makeGraph method on the courses file to see that it is
+# built correctly, prints out nodes and children of nodes
+
+LoadGraph g courses.csv
+
+ListNodes g
+ListChildren g cse331
+ListChildren g math124
+ListChildren g eng101

@@ -1,0 +1,8 @@
+# Tests that the makeGraph method on a given file with duplicate lines does not
+# contain two of the same nodes or reflexive edges, prints them out
+
+loaded graph g
+
+g contains: n1 n2
+the children of n1 in g are: n2(same)
+the children of n2 in g are: n1(same)

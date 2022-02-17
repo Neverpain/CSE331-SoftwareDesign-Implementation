@@ -1,0 +1,9 @@
+# Tests the findPath method on two unrelated nodes and prints out
+# the path from one node to the other
+
+CreateGraph g
+
+AddNode g n1
+AddNode g n2
+
+FindPath g n1 n2

@@ -1,0 +1,11 @@
+# Tests the makeGraph method on the islands file to see that it is
+# built correctly, prints out nodes and children of nodes(no children
+# since there are no connections)
+
+LoadGraph g islands.csv
+
+ListNodes g
+ListChildren g Victoria
+ListChildren g Java
+ListChildren g Honshu
+ListChildren g Borneo

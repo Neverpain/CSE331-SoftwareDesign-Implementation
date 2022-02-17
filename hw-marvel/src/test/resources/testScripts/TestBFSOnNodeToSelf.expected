@@ -1,0 +1,8 @@
+# Tests the findPath method on singular node and prints out
+# nothing for the path from one node to itself
+
+created graph g
+
+added node n1 to g
+
+path from n1 to n1:

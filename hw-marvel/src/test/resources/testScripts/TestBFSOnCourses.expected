@@ -1,0 +1,18 @@
+# Tests the makeGraph method on the courses file to see that it is
+# built correctly, prints out the paths of several nodes
+
+loaded graph g
+
+path from cse142 to cse143:
+cse142 to cse143 via cse
+
+path from math124 to math124:
+
+path from cse142 to math124:
+no path found
+
+path from eng101 to cse143:
+no path found
+
+path from cse143 to eng101:
+no path found

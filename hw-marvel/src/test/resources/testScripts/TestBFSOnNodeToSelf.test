@@ -1,0 +1,8 @@
+# Tests the findPath method on singular node and prints out
+# nothing for the path from one node to itself
+
+CreateGraph g
+
+AddNode g n1
+
+FindPath g n1 n1

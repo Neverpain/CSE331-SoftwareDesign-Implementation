@@ -1,0 +1,12 @@
+# Tests the findPath method from a node, n1, to another node, n4, that has two same
+# length paths and prints out the most alphabetical path, edges added in reverse
+
+CreateGraph g
+
+AddNode g n1
+AddNode g n2
+
+AddEdge g n1 n2 B
+AddEdge g n1 n2 A
+
+FindPath g n1 n2

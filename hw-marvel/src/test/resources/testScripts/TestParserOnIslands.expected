@@ -1,0 +1,11 @@
+# Tests the makeGraph method on the islands file to see that it is
+# built correctly, prints out nodes and children of nodes(no children
+# since there are no connections)
+
+loaded graph g
+
+g contains: Baffin Borneo Ellesmere Greenland Honshu Java Madagascar Sumatra Victoria
+the children of Victoria in g are:
+the children of Java in g are:
+the children of Honshu in g are:
+the children of Borneo in g are:

@@ -1,0 +1,12 @@
+# Tests findPath method from a node, to another node, than back to the original
+# node and prints out the path
+
+created graph g
+
+added node n1 to g
+added node n2 to g
+
+added edge e1 from n1 to n2 in g
+added edge e2 from n2 to n1 in g
+
+path from n1 to n1:

@@ -1,0 +1,16 @@
+# Tests the makeGraph method on the islands file to see that it is
+# built correctly, prints out paths of some nodes
+
+LoadGraph g islands.csv
+
+FindPath g Victoria Java
+
+FindPath g Java Victoria
+
+FindPath g Honshu Borneo
+
+FindPath g Baffin Honshu
+
+FindPath g Java Greenland
+
+FindPath g Java Java

@@ -1,0 +1,8 @@
+# Tests that the makeGraph method on a given file with duplicate lines does not
+# contain two of the same nodes or reflexive edges, prints them out
+
+LoadGraph g duplicateGraph.csv
+
+ListNodes g
+ListChildren g n1
+ListChildren g n2

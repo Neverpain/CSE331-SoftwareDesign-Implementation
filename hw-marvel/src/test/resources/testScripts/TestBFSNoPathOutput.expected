@@ -1,0 +1,10 @@
+# Tests the findPath method on two unrelated nodes and prints out
+# the path from one node to the other
+
+created graph g
+
+added node n1 to g
+added node n2 to g
+
+path from n1 to n2:
+no path found

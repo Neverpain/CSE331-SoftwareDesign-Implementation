@@ -27,11 +27,8 @@ public class MarvelParser {
      * @spec.requires filename is a valid file in the resources/data folder.
      * @param filename the file that will be read
      */
-    // TODO: Replace 'void' with the type you want the parser to produce
     public static void parseData(String filename, Map<String, List<String>> comics, Set<String> characters) {
         List<String> lines = readLines(filename);
-
-        // TODO: Complete this method
         for (String s : lines) {
             String[] split = s.split(",");
             String name = split[0];
@@ -39,7 +36,9 @@ public class MarvelParser {
             if (!comics.containsKey(comic)) {
                 comics.put(comic, new ArrayList<>());
             }
-            comics.get(comic).add(name);
+            if (!comics.get(comic).contains(name)) {
+                comics.get(comic).add(name);
+            }
             characters.add(name);
         }
                     // You'll need to:

@@ -1,0 +1,15 @@
+# Tests that the findPath method works on multistep pathing from one node to
+# another, prints out path
+
+CreateGraph g
+
+AddNode g n1
+AddNode g n2
+AddNode g n3
+AddNode g n4
+
+AddEdge g n1 n2 e1
+AddEdge g n2 n3 e2
+AddEdge g n3 n4 e3
+
+FindPath g n1 n4
