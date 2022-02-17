@@ -48,11 +48,11 @@ public class DirectedGraph {
     private void checkRep() {
         assert (graphMap != null);
 
-        for (String key : graphMap.keySet()) {
-            assert (key != null);
-        }
-
         if (bigTest) {
+            for (String key : graphMap.keySet()) {
+                assert (key != null);
+            }
+
             for (Set<LabeledEdge> set : graphMap.values()) {
                 for (LabeledEdge value : set) {
                     assert (value != null);
