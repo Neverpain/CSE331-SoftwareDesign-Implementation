@@ -1,0 +1,12 @@
+# Tests finding the path of several characters of marvel work and are
+# accurate, tests larger file, prints out the paths of characters
+
+LoadGraph g marvel.csv
+
+FindPath g GORILLA-MAN KINGPIN/WILSON-FISK
+
+FindPath g TAI LINDSAY-MCCABE
+
+FindPath g FATHER-MICHAE-JANES SPIDER-WOMAN/JESSICA
+
+FindPath g CAPTAIN-AMERICA ANDERSON-GAULTHING

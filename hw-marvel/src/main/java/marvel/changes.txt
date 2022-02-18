@@ -1,2 +1,7 @@
 Briefly list any changes you made to your graph class during hw-marvel, and why you made those changes.
 
+I made a change to my checkRep() in the graph class. I realized one of my checks was larger or required more than
+intended, so I put it under my larger tests and disabled it.
+
+I updated the specifications of my graph class according to hw-5-part2 feedback.
+

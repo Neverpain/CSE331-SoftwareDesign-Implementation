@@ -25,7 +25,12 @@ public class MarvelParser {
      * comic book the character appeared in, separated by a comma character
      *
      * @spec.requires filename is a valid file in the resources/data folder.
-     * @param filename the file that will be read
+     * @param filename name of file to be read from
+     * @param comics map containing comics as keys and characters as values (empty at first)
+     * @param characters set containing the characters (empty at first)
+     * @spec.modifies comics and characters
+     * @spec.effects adds all characters from the file to the set(characters), adds the connections
+     * from the comics to their characters to the map(comics)
      */
     public static void parseData(String filename, Map<String, List<String>> comics, Set<String> characters) {
         List<String> lines = readLines(filename);

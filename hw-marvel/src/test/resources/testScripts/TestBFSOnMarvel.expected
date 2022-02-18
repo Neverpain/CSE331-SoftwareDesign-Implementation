@@ -1,0 +1,19 @@
+# Tests finding the path of several characters of marvel work and are
+# accurate, tests larger file, prints out the paths of characters
+
+loaded graph g
+
+path from GORILLA-MAN to KINGPIN/WILSON-FISK:
+GORILLA-MAN to ANT-MAN/DR.-HENRY-J. via AVF-4
+ANT-MAN/DR.-HENRY-J. to KINGPIN/WILSON-FISK via A-312
+
+path from TAI to LINDSAY-MCCABE:
+TAI to LINDSAY-MCCABE via W2-10
+
+path from FATHER-MICHAE-JANES to SPIDER-WOMAN/JESSICA:
+FATHER-MICHAE-JANES to THING/BENJAMIN-J.-GR via JUSTICE-1
+THING/BENJAMIN-J.-GR to SPIDER-WOMAN/JESSICA via COC-1
+
+path from CAPTAIN-AMERICA to ANDERSON-GAULTHING:
+CAPTAIN-AMERICA to ANDREW-CHORD via A-341
+ANDREW-CHORD to ANDERSON-GAULTHING via JUSTICE-1

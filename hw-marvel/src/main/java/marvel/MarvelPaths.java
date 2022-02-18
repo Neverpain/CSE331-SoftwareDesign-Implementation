@@ -2,8 +2,6 @@ package marvel;
 
 import graph.DirectedGraph;
 import graph.LabeledEdge;
-
-import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
@@ -19,8 +17,7 @@ public class MarvelPaths {
      * appear in.
      *
      * @param filename file to be read from
-     * @spec.modifies this
-     * @spec.effects  fills this with nodes and edges from information in given files
+     * @return a newly constructed DirectedGraph with all the information from the file
      * @throws IllegalArgumentException if filename is null
      */
     public static DirectedGraph makeGraph(String filename) {
@@ -59,6 +56,7 @@ public class MarvelPaths {
      *
      * @param start node noting beginning of path
      * @param destination node noting end of path
+     * @param graph graph containing all the information of nodes and edges
      * @return a list of labeled edges that represent the path from one node
      * to another, if no path returns empty list
      * @throws IllegalArgumentException if start or destination == null
@@ -110,5 +108,74 @@ public class MarvelPaths {
         }
         //returns empty list always
         return allPaths.get(start);
+    }
+
+    /**
+     * Allows a user to find the path between two characters in any given file
+     * by accepting input from the console
+     *
+     * @param args string arguments
+     */
+    public static void main(String[] args) {
+        System.out.println("Welcome to the MarvelPaths program.");
+        System.out.println("This program will find the shortest relationship between two characters.");
+        System.out.println("First, please input a file with characters and all their connections.");
+
+        Scanner input = new Scanner(System.in);
+        String file = input.next();
+        DirectedGraph marvelGraph = MarvelPaths.makeGraph(file);
+        System.out.println("Now, you can enter characters within the file to find their connections.");
+
+        boolean quit = false;
+        // Continually runs the program as long as the user does not input quit or q
+        while (!quit) {
+            // Gets character inputs
+            System.out.println("Please input the first character.");
+            String start = input.next();
+
+            System.out.println("Please input the second character.");
+            String destination = input.next();
+
+            while (!marvelGraph.containsNode(start) || !marvelGraph.containsNode(destination)) {
+                System.out.println("One or more of those characters does not exist.");
+                System.out.println("Please input another set of characters.");
+                System.out.println("The first character: ");
+                start = input.next();
+                System.out.println("The second character: ");
+                destination = input.next();
+            }
+
+            //Finds the path of characters
+            List<LabeledEdge> path = new ArrayList<>(findPath(start, destination, marvelGraph));
+            if (path.isEmpty()) {
+                System.out.println("There is no path from " + start + " to " + destination + ".");
+                System.out.println("They share no connections what so ever.");
+            }
+            else {
+                if (path.size() == 1) {
+                    System.out.println("The shortest path consists of " + path.size() + " connection.");
+                    System.out.println("The connection is: ");
+                } else {
+                    System.out.println("The shortest path consists of " + path.size() + " connections.");
+                    System.out.println("The connections are: ");
+                }
+                int i = 0;
+                while (i != path.size()) {
+                    System.out.println(path.get(i).getStart() + " to " + path.get(i).getDestination() +
+                    " via " + path.get(i).getLabel());
+                    i++;
+                }
+            }
+            // Asks user if they want to continue or not with the program
+            System.out.println();
+            System.out.println("If you would like to find the connections of other characters, enter y or yes.");
+            System.out.println("If not, enter q or quit.");
+            String next = input.next();
+            if (next.equalsIgnoreCase("q") || next.equalsIgnoreCase("quit")) {
+                quit = true;
+                System.out.println("I hope you had fun! BYE!");
+            }
+        }
+        input.close();
     }
 }
