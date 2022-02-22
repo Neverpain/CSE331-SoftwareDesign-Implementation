@@ -31,7 +31,7 @@ public class TestPath {
     public void testIteratorUnsupportedRemove() {
         Path path = new Path(new Point(1.0, 2.0));
         path = path.extend(new Point(3.0, 2.0), 2.0D);
-        Iterator<Path.Segment> iterator = path.iterator();
+        Iterator<Path.Segment<T>> iterator = path.iterator();
         // Next must be called before remove or the iterator would be in an illegal state.
         iterator.next();
         iterator.remove();
