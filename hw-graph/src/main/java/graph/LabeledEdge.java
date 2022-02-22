@@ -8,34 +8,36 @@ import java.util.Comparator;
  * single node (or vertex).
  *
  * Specification fields:
- * @spec.specfield destination : String  // The node(vertex) this edge is pointing towards.
- * @spec.specfield start : String // The node where this edge starts
- * @spec.specfield label : String  // The label of this edge.
+ * @spec.specfield destination : N  // The node(vertex) this edge is pointing towards.
+ * @spec.specfield start : N // The node where this edge starts
+ * @spec.specfield label : L  // The label of this edge.
  */
-public class LabeledEdge implements Comparable<LabeledEdge>{
+public class LabeledEdge <N, L> {
 
     // Abstraction Function:
     //      AF(this) = labeled edge e such that
     //          e.destination = this.destination
     //          e.label = this.label
+    //          e.start = this.start
     //
     // Representation Invariant for every LabeledEdge l:
-    //      label != null && destination != nul
+    //      label != null && destination != null
+    //      && start != null
 
     /**
      * The node the labeled edge points at
      */
-    private final String destination;
+    private final N destination;
 
     /**
      * Label of the edge
      */
-    private final String label;
+    private final L label;
 
     /**
      * The node the labeled edge starts at
      */
-    private final String start;
+    private final N start;
 
     /**
      * Constructs a new LabeledEdge.
@@ -47,7 +49,7 @@ public class LabeledEdge implements Comparable<LabeledEdge>{
      * @spec.effects constructs a new LabeledEdge, with this.destination = d,
      * this.label = l, this.start = s
      */
-    public LabeledEdge(String s, String d, String l) {
+    public LabeledEdge(N s, N d, L l) {
         if (l == null || d == null || s == null) {
             throw new IllegalArgumentException("Labeled edges cannot have null values");
         }
@@ -71,7 +73,7 @@ public class LabeledEdge implements Comparable<LabeledEdge>{
      *
      * @return returns the destination of this LabeledEdge
      */
-    public String getDestination() {
+    public N getDestination() {
         checkRep();
         return destination;
     }
@@ -81,7 +83,7 @@ public class LabeledEdge implements Comparable<LabeledEdge>{
      *
      * @return returns the start of this LabeledEdge
      */
-    public String getStart() {
+    public N getStart() {
         checkRep();
         return start;
     }
@@ -91,7 +93,7 @@ public class LabeledEdge implements Comparable<LabeledEdge>{
      *
      * @return returns the label of this LabeledEdge
      */
-    public String getLabel() {
+    public L getLabel() {
         checkRep();
         return label;
     }
@@ -106,12 +108,13 @@ public class LabeledEdge implements Comparable<LabeledEdge>{
     @Override
     public boolean equals(Object o) {
         checkRep();
-        if (!(o instanceof LabeledEdge)) {
+        if (!(o instanceof LabeledEdge<?, ?>)) {
             return false;
         }
-        LabeledEdge e = (LabeledEdge) o;
+        LabeledEdge<?, ?> e = (LabeledEdge<?, ?>) o;
         checkRep();
-        return hashCode() == o.hashCode();
+        return destination.equals(e.getDestination()) && start.equals(e.getStart()) &&
+        label.equals(e.getLabel());
     }
 
     /**
@@ -123,23 +126,5 @@ public class LabeledEdge implements Comparable<LabeledEdge>{
     public int hashCode() {
         checkRep();
         return label.hashCode() + destination.hashCode() + start.hashCode();
-    }
-
-    /**
-     * Compares two given nodes
-     *
-     * @param e second labeled edge to be compared
-     * @return a positive int if e1 &gt; e2, a negative int if e1 &lt; e2, or
-     * zero if they are both "equal"
-     */
-
-    @Override
-    public int compareTo(LabeledEdge e) {
-        if(!(this.getDestination().equals(e.getDestination())))
-            return this.getDestination().compareTo(e.getDestination());
-        if (!(this.getLabel().equals(e.getLabel()))) {
-            return this.getLabel().compareTo(e.getLabel());
-        }
-        return 0;
     }
 }

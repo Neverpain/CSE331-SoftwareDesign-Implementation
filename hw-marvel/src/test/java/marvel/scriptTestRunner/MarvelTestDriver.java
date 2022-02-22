@@ -27,7 +27,7 @@ public class MarvelTestDriver {
     /**
      * String -> Graph: maps the names of graphs to the actual graph
      **/
-    private final Map<String, DirectedGraph> graphs = new HashMap<>();
+    private final Map<String, DirectedGraph<String, String>> graphs = new HashMap<>();
     private final PrintWriter output;
     private final BufferedReader input;
 
@@ -118,7 +118,7 @@ public class MarvelTestDriver {
     }
 
     private void createGraph(String graphName) {
-        graphs.put(graphName, new DirectedGraph());
+        graphs.put(graphName, new DirectedGraph<>());
         output.println("created graph " + graphName);
     }
 
@@ -134,7 +134,7 @@ public class MarvelTestDriver {
     }
 
     private void addNode(String graphName, String nodeName) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         graph.addNode(nodeName);
         output.println("added node " + nodeName + " to " + graphName);
     }
@@ -154,7 +154,7 @@ public class MarvelTestDriver {
 
     private void addEdge(String graphName, String parentName, String childName,
                          String edgeLabel) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         graph.addEdge(parentName, childName, edgeLabel);
         output.println("added edge " + edgeLabel + " from " + parentName + " to "
                 + childName + " in " + graphName);
@@ -170,13 +170,13 @@ public class MarvelTestDriver {
     }
 
     private void listNodes(String graphName) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         String result = graphName + " contains:";
         Set<String> nodes = new TreeSet<>(graph.listNodes());
         for (String n : nodes) {
             result += " " + n;
         }
-        output.println(result);;
+        output.println(result);
     }
 
     private void listChildren(List<String> arguments) {
@@ -190,11 +190,11 @@ public class MarvelTestDriver {
     }
 
     private void listChildren(String graphName, String parentName) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         String result = "the children of " + parentName + " in " + graphName + " are:";
-        Set<LabeledEdge> edges = new TreeSet<>(new Comparator<LabeledEdge>() {
+        Set<LabeledEdge<String, String>> edges = new TreeSet<>(new Comparator<>() {
             @Override
-            public int compare(LabeledEdge e1, LabeledEdge e2) {
+            public int compare(LabeledEdge<String, String> e1, LabeledEdge<String, String> e2) {
                 if(!(e1.getDestination().equals(e2.getDestination())))
                     return e1.getDestination().compareTo(e2.getDestination());
                 if (!(e1.getLabel().equals(e2.getLabel()))) {
@@ -204,13 +204,13 @@ public class MarvelTestDriver {
             }
         });
         edges.addAll(graph.listChildren(parentName));
-        for (LabeledEdge e : edges) {
+        for (LabeledEdge<String, String> e : edges) {
             result += " " + e.getDestination() + "(" + e.getLabel() +")";
         }
         output.println(result);
     }
 
-    private void loadGraph(List<String> arguments) throws FileNotFoundException {
+    private void loadGraph(List<String> arguments) {
         if(arguments.size() != 2) {
             throw new CommandException("Bad arguments to LoadGraph: " + arguments);
         }
@@ -221,7 +221,7 @@ public class MarvelTestDriver {
         loadGraph(graphName, fileName);
     }
 
-    private void loadGraph(String graphName, String fileName) throws FileNotFoundException {
+    private void loadGraph(String graphName, String fileName) {
         graphs.put(graphName, MarvelPaths.makeGraph(fileName));
         output.println("loaded graph " + graphName);
     }
@@ -249,7 +249,7 @@ public class MarvelTestDriver {
         } else if (start.equals(destination)) {
             output.println("path from " + start + " to " + destination + ":");
         } else {
-            List<LabeledEdge> paths = MarvelPaths.findPath(start, destination, graphs.get(graphName));
+            List<LabeledEdge<String, String>> paths = MarvelPaths.findPath(start, destination, graphs.get(graphName));
             output.println("path from " + start + " to " + destination + ":");
             if (paths.isEmpty()) {
                 output.println("no path found");

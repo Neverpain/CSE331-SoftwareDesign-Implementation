@@ -12,7 +12,7 @@ public class MarvelPathsTest {
     @Rule public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
 
     // Constructed DirectedGraph instance that is empty
-    private final DirectedGraph graph = new DirectedGraph();
+    private final DirectedGraph<String, String> graph = new DirectedGraph<>();
 
     // Tests making a graph with a null file to read from
     @Test (expected = IllegalArgumentException.class)

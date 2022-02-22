@@ -8,11 +8,11 @@ import java.util.*;
  * graph.
  *
  * Specification fields:
- * @spec.specfield graphMap : {@literal Map<String(l), Set<LabeledEdge(l,d)>>} // Map of all the
+ * @spec.specfield graphMap : {@literal Map<N, Set<LabeledEdge<N, L>>} // Map of all the
  * nodes with their edges, which contain the destination nodes.
  *
  */
-public class DirectedGraph {
+public class DirectedGraph<N, L> {
 
     // Abstraction Function:
     //      AF(this) = directed map m such that
@@ -28,7 +28,7 @@ public class DirectedGraph {
     /**
      * Holds all the nodes and outgoing edges in this
      */
-    private final Map<String, Set<LabeledEdge>> graphMap;
+    private final Map<N, Set<LabeledEdge<N, L>>> graphMap;
 
     private static final boolean bigTest = false;
 
@@ -49,12 +49,12 @@ public class DirectedGraph {
         assert (graphMap != null);
 
         if (bigTest) {
-            for (String key : graphMap.keySet()) {
+            for (N key : graphMap.keySet()) {
                 assert (key != null);
             }
 
-            for (Set<LabeledEdge> set : graphMap.values()) {
-                for (LabeledEdge value : set) {
+            for (Set<LabeledEdge<N, L>> set : graphMap.values()) {
+                for (LabeledEdge<N, L> value : set) {
                     assert (value != null);
                 }
             }
@@ -65,22 +65,22 @@ public class DirectedGraph {
     /**
      * Creates a new node to put in the graph if it is not already present.
      *
-     * @param l label of the node to be added
+     * @param data label of the node to be added
      * @return true iff this graph does not already contain the node
      * @spec.requires l != null
      * @spec.modifies this
      * @spec.effects adds new node to the map of the graph
      * @throws IllegalArgumentException if l == null
      */
-    public boolean addNode(String l) {
+    public boolean addNode(N data) {
         checkRep();
-        if (l == null) {
+        if (data == null) {
             throw new IllegalArgumentException();
         }
         boolean addedNode = false;
         //Checks if graph contains same node
-        if (!graphMap.containsKey(l)) {
-            graphMap.put(l, new HashSet<>());
+        if (!graphMap.containsKey(data)) {
+            graphMap.put(data, new HashSet<>());
             addedNode = true;
         }
         checkRep();
@@ -102,7 +102,7 @@ public class DirectedGraph {
      * are not contained in the graph
      * @throws IllegalArgumentException if v1, v2, or l == null
      */
-    public boolean addEdge(String v1, String v2, String l) {
+    public boolean addEdge(N v1, N v2, L l) {
         checkRep();
         if (v1 == null || v2 == null || l == null) {
             throw new IllegalArgumentException();
@@ -114,7 +114,7 @@ public class DirectedGraph {
         }
 
         boolean addedEdge = false;
-        LabeledEdge newEdge = new LabeledEdge(v1, v2, l);
+        LabeledEdge<N, L> newEdge = new LabeledEdge<>(v1, v2, l);
         //Checks if graph contains same edge
         if (!graphMap.get(v1).contains(newEdge)) {
             graphMap.get(v1).add(newEdge);
@@ -134,7 +134,7 @@ public class DirectedGraph {
      * @throws IllegalArgumentException if v is not contained in the graph
      * @throws IllegalArgumentException if v == null
      */
-    public Set<LabeledEdge> listChildren(String v) {
+    public Set<LabeledEdge<N, L>> listChildren(N v) {
         checkRep();
         if (v == null) {
             throw new IllegalArgumentException();
@@ -152,7 +152,7 @@ public class DirectedGraph {
      * @return a set containing all the nodes in the graph
      * @spec.requires this != null and is not empty
      */
-    public Set<String> listNodes() {
+    public Set<N> listNodes() {
         checkRep();
         return new HashSet<>(graphMap.keySet());
     }
@@ -165,13 +165,13 @@ public class DirectedGraph {
      * @spec.requires v != null
      * @throws IllegalArgumentException if v == null
      */
-    public boolean containsNode(String v) {
+    public boolean containsNode(N v) {
         checkRep();
         if (v == null) {
             throw new IllegalArgumentException();
         }
         boolean containsNode = false;
-        for (String v2 : graphMap.keySet()) {
+        for (N v2 : graphMap.keySet()) {
             if (v.equals(v2)) {
                 containsNode = true;
             }
@@ -189,20 +189,20 @@ public class DirectedGraph {
      * @spec.requires v1 != null and v2 != null
      * @throws IllegalArgumentException if v1 or v2 == null
      */
-    public int numberOfEdges(String v1, String v2) {
+    public int numberOfEdges(N v1, N v2) {
        checkRep();
        if (v1 == null || v2 == null) {
            throw new IllegalArgumentException();
        }
        int numberOfEdges = 0;
        //Gets the edges outgoing from v1
-       for (LabeledEdge e: graphMap.get(v1)) {
+       for (LabeledEdge<N, L> e: graphMap.get(v1)) {
            if (e.getDestination().equals(v2)) {
                numberOfEdges++;
            }
        }
        //Gets the edges outgoing from v2
-       for (LabeledEdge e: graphMap.get(v2)) {
+       for (LabeledEdge<N, L> e: graphMap.get(v2)) {
            if (e.getDestination().equals(v1)) {
                 numberOfEdges++;
            }
@@ -225,7 +225,7 @@ public class DirectedGraph {
      * in the graph
      * @throws IllegalArgumentException if v1 or v2 == null
      */
-    public boolean connected(String v1, String v2) {
+    public boolean connected(N v1, N v2) {
         checkRep();
         if (v1 == null || v2 == null) {
             throw new IllegalArgumentException();
@@ -235,14 +235,14 @@ public class DirectedGraph {
         }
         boolean connected = false;
         //Checks outgoing edges from v1
-        for (LabeledEdge e: graphMap.get(v1)) {
+        for (LabeledEdge<N, L> e: graphMap.get(v1)) {
             if (e.getDestination().equals(v2)) {
                 connected = true;
             }
         }
 
         //Checks outgoing edges from v2
-        for (LabeledEdge e: graphMap.get(v2)) {
+        for (LabeledEdge<N, L> e: graphMap.get(v2)) {
             if (e.getDestination().equals(v1)) {
                 connected = true;
             }

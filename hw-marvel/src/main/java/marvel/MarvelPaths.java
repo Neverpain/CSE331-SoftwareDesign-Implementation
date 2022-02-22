@@ -20,11 +20,11 @@ public class MarvelPaths {
      * @return a newly constructed DirectedGraph with all the information from the file
      * @throws IllegalArgumentException if filename is null
      */
-    public static DirectedGraph makeGraph(String filename) {
+    public static DirectedGraph<String, String> makeGraph(String filename) {
         if (filename == null) {
             throw new IllegalArgumentException("The filename cannot be null.");
         }
-        DirectedGraph graph = new DirectedGraph();
+        DirectedGraph<String, String> graph = new DirectedGraph<>();
         Set<String> characters = new HashSet<>();
         Map<String, List<String>> comics = new HashMap<>();
 
@@ -62,7 +62,7 @@ public class MarvelPaths {
      * @throws IllegalArgumentException if start or destination == null
      * @throws  IllegalStateException if graph.size() == 0
      */
-    public static List<LabeledEdge> findPath(String start, String destination, DirectedGraph graph) {
+    public static List<LabeledEdge<String, String>> findPath(String start, String destination, DirectedGraph<String, String> graph) {
         if (start == null || destination == null) {
             throw new IllegalArgumentException("The start and destination cannot be null.");
         }
@@ -70,7 +70,7 @@ public class MarvelPaths {
             throw new IllegalStateException("The graph cannot be empty.");
         }
         Queue<String> worklist = new LinkedList<>();
-        Map<String, List<LabeledEdge>> allPaths = new HashMap<>();
+        Map<String, List<LabeledEdge<String, String>>> allPaths = new HashMap<>();
         worklist.add(start);
         allPaths.put(start, new ArrayList<>());
         while (!worklist.isEmpty()) {
@@ -80,9 +80,9 @@ public class MarvelPaths {
             }
             else {
                 // Orders connections(edges) from one node to its children alphabetically
-                Set<LabeledEdge> nodesToVisit = new TreeSet<>(new Comparator<>() {
+                Set<LabeledEdge<String, String>> nodesToVisit = new TreeSet<>(new Comparator<>() {
                     @Override
-                    public int compare(LabeledEdge e1, LabeledEdge e2) {
+                    public int compare(LabeledEdge<String, String> e1, LabeledEdge<String, String> e2) {
                         if(!(e1.getDestination().equals(e2.getDestination())))
                             return e1.getDestination().compareTo(e2.getDestination());
                         if (!(e1.getLabel().equals(e2.getLabel()))) {
@@ -95,10 +95,10 @@ public class MarvelPaths {
                 // Checks the characters(children) connected to current character(currentNode) and
                 // appends the connection(edge) to create a new path to the characters if they
                 // have not been checked for connections yet
-                for (LabeledEdge e : nodesToVisit) {
+                for (LabeledEdge<String, String> e : nodesToVisit) {
                     if (!allPaths.containsKey(e.getDestination())) {
-                        List<LabeledEdge> pathOfPrev = allPaths.get(currentNode);
-                        List<LabeledEdge> pathOfCurrent = new ArrayList<>(pathOfPrev);
+                        List<LabeledEdge<String, String>> pathOfPrev = allPaths.get(currentNode);
+                        List<LabeledEdge<String, String>> pathOfCurrent = new ArrayList<>(pathOfPrev);
                         pathOfCurrent.add(e);
                         allPaths.put(e.getDestination(), pathOfCurrent);
                         worklist.add(e.getDestination());
@@ -123,7 +123,7 @@ public class MarvelPaths {
 
         Scanner input = new Scanner(System.in);
         String file = input.next();
-        DirectedGraph marvelGraph = MarvelPaths.makeGraph(file);
+        DirectedGraph<String, String> marvelGraph = MarvelPaths.makeGraph(file);
         System.out.println("Now, you can enter characters within the file to find their connections.");
 
         boolean quit = false;
@@ -146,7 +146,7 @@ public class MarvelPaths {
             }
 
             //Finds the path of characters
-            List<LabeledEdge> path = new ArrayList<>(findPath(start, destination, marvelGraph));
+            List<LabeledEdge<String, String>> path = new ArrayList<>(findPath(start, destination, marvelGraph));
             if (path.isEmpty()) {
                 System.out.println("There is no path from " + start + " to " + destination + ".");
                 System.out.println("They share no connections what so ever.");

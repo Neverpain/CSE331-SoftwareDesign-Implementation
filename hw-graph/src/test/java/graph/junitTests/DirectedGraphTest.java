@@ -11,13 +11,13 @@ public class DirectedGraphTest {
     @Rule public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
 
     //Constructed DirectedGraph instance that is empty
-    private final DirectedGraph graph1 = new DirectedGraph();
+    private final DirectedGraph<String, String> graph1 = new DirectedGraph<>();
 
     //Constructed DirectedGraph instance that has one node
-    private final DirectedGraph graph2 = new DirectedGraph();
+    private final DirectedGraph<String, String> graph2 = new DirectedGraph<>();
 
     //Constructed DirectedGraph instance that has two nodes
-    private final DirectedGraph graph3 = new DirectedGraph();
+    private final DirectedGraph<String, String> graph3 = new DirectedGraph<>();
 
     //Initializes all the graphs
     @Before
