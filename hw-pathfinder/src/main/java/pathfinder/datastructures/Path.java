@@ -214,7 +214,7 @@ public class Path<N> implements Iterable<Path<N>.Segment> {
     /**
      * Segment represents a single segment as part of a longer, more complex path between nodes.
      * Segments are immutable parts of a larger path that cannot be instantiated directly, and
-     * are created as part of larger paths by calling Path#extend(<N>, double).
+     * are created as part of larger paths by calling Path#extend(N, double).
      */
     public class Segment {
 
