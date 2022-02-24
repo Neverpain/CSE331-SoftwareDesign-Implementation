@@ -41,6 +41,6 @@ public class TestDijkstraAlgorithm {
     @Test
     public void TestDijkstraReturn() {
         List<LabeledEdge<String, Double>> list = DijkstraAlgorithm.findPath("v1", "v2", graph);
-        assertEquals(1, list.size());
+        assertEquals(0, list.size());
     }
 }
