@@ -7,10 +7,12 @@ import java.util.*;
  * and LabelEdges which represent the vertices and the edges connecting them on a
  * graph.
  *
- * Specification fields:
- * @spec.specfield graphMap : {@literal Map<N, Set<LabeledEdge<N, L>>} // Map of all the
- * nodes with their edges, which contain the destination nodes.
+ * @param <N> the type of node labels
+ * @param <L> the type of edge labels
  *
+ * Specification fields:
+ * @spec.specfield graphMap : {@literal Map<<N>, Set<LabeledEdge<<N>, <L>>>} // Map of all the
+ * nodes with their edges, which contain the destination nodes.
  */
 public class DirectedGraph<N, L> {
 
@@ -67,7 +69,6 @@ public class DirectedGraph<N, L> {
      *
      * @param data label of the node to be added
      * @return true iff this graph does not already contain the node
-     * @spec.requires l != null
      * @spec.modifies this
      * @spec.effects adds new node to the map of the graph
      * @throws IllegalArgumentException if l == null
@@ -93,11 +94,12 @@ public class DirectedGraph<N, L> {
      * @param l  the label of the edge to be added
      * @param v1 the start of the edge
      * @param v2 the destination of the edge
+     *
      * @return true iff this graph does not already contain the edge (with the same
      * destination, start, and label)
-     * @spec.requires v1, v2, and l != null
      * @spec.modifies this
      * @spec.effects adds a new edge to the map of the graph
+     *
      * @throws IllegalStateException if !(graphMap.size() &gt; 1) or v1 or v2
      * are not contained in the graph
      * @throws IllegalArgumentException if v1, v2, or l == null
@@ -130,7 +132,6 @@ public class DirectedGraph<N, L> {
      * @param v a node contained by the graph
      * @return a set containing all the outgoing edges of v (an empty set if there are
      * no children)
-     * @spec.requires v != null
      * @throws IllegalArgumentException if v is not contained in the graph
      * @throws IllegalArgumentException if v == null
      */
@@ -150,7 +151,6 @@ public class DirectedGraph<N, L> {
      * Lists all the nodes contained in the graph
      *
      * @return a set containing all the nodes in the graph
-     * @spec.requires this != null and is not empty
      */
     public Set<N> listNodes() {
         checkRep();
@@ -162,7 +162,6 @@ public class DirectedGraph<N, L> {
      *
      * @param v the node to be searched for
      * @return true iff the node, v, is present within the graph
-     * @spec.requires v != null
      * @throws IllegalArgumentException if v == null
      */
     public boolean containsNode(N v) {
@@ -186,7 +185,6 @@ public class DirectedGraph<N, L> {
      * @param v1 the first node
      * @param v2 the second node
      * @return the number of edges between v1 and v2
-     * @spec.requires v1 != null and v2 != null
      * @throws IllegalArgumentException if v1 or v2 == null
      */
     public int numberOfEdges(N v1, N v2) {
@@ -219,8 +217,6 @@ public class DirectedGraph<N, L> {
      * @param v1 the first node
      * @param v2 the second node
      * @return true iff there are edges between the nodes given
-     * @spec.requires v1 != null and v2 != null, v1 and v2 must
-     * be contained in the graph
      * @throws IllegalStateException if v1 or v2 are not contained
      * in the graph
      * @throws IllegalArgumentException if v1 or v2 == null

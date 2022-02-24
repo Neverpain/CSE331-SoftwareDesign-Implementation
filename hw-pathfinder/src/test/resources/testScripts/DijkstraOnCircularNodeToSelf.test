@@ -1,0 +1,20 @@
+# Tests finding the path using Dijkstra's algorithm from a node, to another node
+# than back to the original node and prints out the path
+
+CreateGraph g
+
+AddNode g A
+AddNode g B
+AddNode g C
+
+AddEdge g A B 1.0
+AddEdge g B C 1.0
+AddEdge g C A 1.0
+
+FindPath g A A
+
+FindPath g A B
+
+FindPath g A C
+
+FindPath g C A

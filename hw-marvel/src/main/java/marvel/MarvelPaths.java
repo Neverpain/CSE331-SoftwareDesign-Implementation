@@ -5,12 +5,15 @@ import graph.LabeledEdge;
 import java.util.*;
 
 /**
- * MarvelPaths represents a client implementation of my graph ADT where each node represents
- * a character and each edge connecting two characters is labeled as a comic book that both
- * appear in. MarvelPaths creates a "social" network between characters through their
- * comic book connections.
+ * This class, MarvelPaths, is an implementation to find the least-connections path between
+ * two given nodes that requires a graph where each node represents a character and each
+ * edge connecting two characters is labeled as a comic book that they both appear in.
+ *
  */
 public class MarvelPaths {
+
+    // This class does not represent an ADT.
+
     /**
      * Builds a new graph with all the marvel connections from a given file. The nodes of
      * the graph represent unique characters and the edges represent the comic books they
@@ -25,20 +28,15 @@ public class MarvelPaths {
             throw new IllegalArgumentException("The filename cannot be null.");
         }
         DirectedGraph<String, String> graph = new DirectedGraph<>();
-        Set<String> characters = new HashSet<>();
-        Map<String, List<String>> comics = new HashMap<>();
+        Map<String, List<String>> comics = MarvelParser.parseData(filename);
 
-        // Gives the characters and how they are connected through comic books
-        MarvelParser.parseData(filename, comics, characters);
-
-        // Adds the characters(nodes) to the graph
-        for (String character : characters) {
-            graph.addNode(character);
-        }
-
-        // Adds the connections(edges), going both directions, to the graph
         for (String comic : comics.keySet()) {
             List<String> names = comics.get(comic);
+            for (String character : names) {
+                if (!graph.containsNode(character)) {
+                    graph.addNode(character);
+                }
+            }
             for (int i = 0; i < names.size() - 1; i++) {
                 for (int k = names.size() - 1; k > i; k--) {
                     graph.addEdge(names.get(i), names.get(k), comic);
@@ -50,9 +48,10 @@ public class MarvelPaths {
     }
 
     /**
-     * Finds the closest path from one character(node) to another
+     * Finds the closest path using BFS from one character(node) to another
      * character(node) using their connections formed by the edges
-     * of the graph.
+     * of the graph. If there is more than one path, chooses the least
+     * lexicographically one as a return.
      *
      * @param start node noting beginning of path
      * @param destination node noting end of path

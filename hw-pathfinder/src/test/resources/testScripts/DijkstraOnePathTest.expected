@@ -1,0 +1,13 @@
+# Tests that Dijkstra's algorithm works on two nodes with
+# only one edge between them, outputs it
+
+created graph g
+
+added node A to g
+added node B to g
+
+added edge 1.000 from A to B in g
+
+path from A to B:
+A to B with weight 1.000
+total cost: 1.000

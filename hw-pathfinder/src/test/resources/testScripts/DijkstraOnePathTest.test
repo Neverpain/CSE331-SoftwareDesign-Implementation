@@ -1,0 +1,11 @@
+# Tests that Dijkstra's algorithm works on two nodes with
+# only one edge between them, outputs it
+
+CreateGraph g
+
+AddNode g A
+AddNode g B
+
+AddEdge g A B 1.0
+
+FindPath g A B

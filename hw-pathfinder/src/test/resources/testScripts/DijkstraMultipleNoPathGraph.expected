@@ -1,0 +1,25 @@
+# Tests Dijkstra's algorithm on an "island" graph will always return
+# no paths between any given node within the graph, outputs it all
+
+created graph g
+
+added node A to g
+added node B to g
+added node C to g
+added node D to g
+added node E to g
+
+path from A to B:
+no path found
+
+path from A to C:
+no path found
+
+path from C to E:
+no path found
+
+path from D to B:
+no path found
+
+path from D to E:
+no path found

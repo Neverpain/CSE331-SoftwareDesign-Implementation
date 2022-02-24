@@ -1,0 +1,16 @@
+# Tests that Dijkstra's algorithm doesn't have defined behavior for outputting paths
+# when there are two minimum-cost paths
+
+CreateGraph g
+
+AddNode g A
+AddNode g B
+AddNode g C
+AddNode g D
+
+AddEdge g A B 1.0
+AddEdge g B D 3.0
+AddEdge g A C 2.0
+AddEdge g C D 2.0
+
+FindPath g A D

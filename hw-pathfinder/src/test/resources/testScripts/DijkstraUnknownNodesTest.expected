@@ -1,0 +1,20 @@
+# Tests Dijkstra's algorithm on unknown nodes, prints out
+# output
+
+created graph g
+
+added node A to g
+added node B to g
+
+unknown: X
+
+unknown: X
+
+unknown: X
+unknown: X
+
+unknown: X
+unknown: Y
+
+unknown: Y
+unknown: X

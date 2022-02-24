@@ -1,0 +1,9 @@
+# Tests the output of a path from a node to itself
+# using Dijkstra's algorithm is correct, prints it out
+
+created graph g
+
+added node A to g
+
+path from A to A:
+total cost: 0.000

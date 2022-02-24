@@ -26,13 +26,10 @@ public class MarvelParser {
      *
      * @spec.requires filename is a valid file in the resources/data folder.
      * @param filename name of file to be read from
-     * @param comics map containing comics as keys and characters as values (empty at first)
-     * @param characters set containing the characters (empty at first)
-     * @spec.modifies comics and characters
-     * @spec.effects adds all characters from the file to the set(characters), adds the connections
-     * from the comics to their characters to the map(comics)
+     * @return a map containing unique comics as keys and their connecting characters as values
      */
-    public static void parseData(String filename, Map<String, List<String>> comics, Set<String> characters) {
+    public static Map<String, List<String>> parseData(String filename) {
+        Map<String, List<String>> comics = new HashMap<>();
         List<String> lines = readLines(filename);
         for (String s : lines) {
             String[] split = s.split(",");
@@ -44,8 +41,8 @@ public class MarvelParser {
             if (!comics.get(comic).contains(name)) {
                 comics.get(comic).add(name);
             }
-            characters.add(name);
         }
+        return comics;
                     // You'll need to:
         //  - Split each line into its individual parts
         //  - Collect the data into some convenient data structure(s) to return to the graph building code

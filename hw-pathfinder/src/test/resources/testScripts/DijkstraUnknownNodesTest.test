@@ -1,0 +1,17 @@
+# Tests Dijkstra's algorithm on unknown nodes, prints out
+# output
+
+CreateGraph g
+
+AddNode g A
+AddNode g B
+
+FindPath g A X
+
+FindPath g B X
+
+FindPath g X X
+
+FindPath g X Y
+
+FindPath g Y X

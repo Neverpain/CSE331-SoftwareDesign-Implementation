@@ -1,0 +1,8 @@
+# Tests the output of a path from a node to itself
+# using Dijkstra's algorithm is correct, prints it out
+
+CreateGraph g
+
+AddNode g A
+
+FindPath g A A

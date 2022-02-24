@@ -1,0 +1,12 @@
+# Tests that the ListChildren method in the driver compares edges numerically
+# , outputs them out
+
+CreateGraph g
+
+AddNode g A
+AddNode g B
+
+AddEdge g A B 5.0
+AddEdge g A B 1.0
+
+ListChildren g A

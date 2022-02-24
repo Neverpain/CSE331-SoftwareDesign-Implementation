@@ -1,0 +1,18 @@
+# Tests that the driver methods outputs all numerical values to 3 decimals
+# digits and rounds properly
+
+created graph g
+
+added node A to g
+added node B to g
+added node C to g
+
+added edge 1.000 from A to B in g
+added edge 3.334 from B to C in g
+
+the children of A in g are: B(1.000)
+
+path from A to C:
+A to B with weight 1.000
+B to C with weight 3.334
+total cost: 4.334

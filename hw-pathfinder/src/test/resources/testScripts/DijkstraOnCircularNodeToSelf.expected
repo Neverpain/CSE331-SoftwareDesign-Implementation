@@ -1,0 +1,28 @@
+# Tests finding the path using Dijkstra's algorithm from a node, to another node
+# than back to the original node and prints out the path
+
+created graph g
+
+added node A to g
+added node B to g
+added node C to g
+
+added edge 1.000 from A to B in g
+added edge 1.000 from B to C in g
+added edge 1.000 from C to A in g
+
+path from A to A:
+total cost: 0.000
+
+path from A to B:
+A to B with weight 1.000
+total cost: 1.000
+
+path from A to C:
+A to B with weight 1.000
+B to C with weight 1.000
+total cost: 2.000
+
+path from C to A:
+C to A with weight 1.000
+total cost: 1.000

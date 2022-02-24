@@ -1,0 +1,16 @@
+# Tests that the driver methods outputs all numerical values to 3 decimals
+# digits and rounds properly
+
+CreateGraph g
+
+AddNode g A
+AddNode g B
+AddNode g C
+
+AddEdge g A B 1
+AddEdge g B C 3.3338
+
+ListChildren g A
+
+FindPath g A C
+

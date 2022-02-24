@@ -2,6 +2,7 @@ package graph;
 
 import java.awt.*;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * LabelEdge represents an edge with a label that points towards a
@@ -11,7 +12,11 @@ import java.util.Comparator;
  * @spec.specfield destination : N  // The node(vertex) this edge is pointing towards.
  * @spec.specfield start : N // The node where this edge starts
  * @spec.specfield label : L  // The label of this edge.
+ *
+ * @param <N> the type of node labels
+ * @param <L> the type of edge labels
  */
+
 public class LabeledEdge <N, L> {
 
     // Abstraction Function:
@@ -45,12 +50,13 @@ public class LabeledEdge <N, L> {
      * @param s the start of the LabeledEdge
      * @param l the label of the LabeledEdge
      * @param d the destination of the LabeledEdge
-     * @spec.requires d != null and l != null
      * @spec.effects constructs a new LabeledEdge, with this.destination = d,
      * this.label = l, this.start = s
+     * @throws IllegalArgumentException if d, l, or s == null
      */
+
     public LabeledEdge(N s, N d, L l) {
-        if (l == null || d == null || s == null) {
+        if (s == null || d == null || l == null) {
             throw new IllegalArgumentException("Labeled edges cannot have null values");
         }
         destination = d;

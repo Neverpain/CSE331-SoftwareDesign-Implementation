@@ -1,0 +1,9 @@
+# Tests Dijkstra's algorithm on two nodes with no path to
+# each other, prints it out
+
+CreateGraph g
+
+AddNode g A
+AddNode g B
+
+FindPath g A B

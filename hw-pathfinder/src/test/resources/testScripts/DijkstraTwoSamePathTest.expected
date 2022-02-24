@@ -1,0 +1,19 @@
+# Tests that Dijkstra's algorithm doesn't have defined behavior for outputting paths
+# when there are two minimum-cost paths
+
+created graph g
+
+added node A to g
+added node B to g
+added node C to g
+added node D to g
+
+added edge 1.000 from A to B in g
+added edge 3.000 from B to D in g
+added edge 2.000 from A to C in g
+added edge 2.000 from C to D in g
+
+path from A to D:
+A to B with weight 1.000
+B to D with weight 3.000
+total cost: 4.000

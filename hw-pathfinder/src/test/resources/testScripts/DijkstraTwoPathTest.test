@@ -1,0 +1,12 @@
+# Tests that Dijkstra's algorithm properly outputs the minimum-cost path
+# between two nodes
+
+CreateGraph g
+
+AddNode g A
+AddNode g B
+
+AddEdge g A B 1.0
+AddEdge g A B 10.0
+
+FindPath g A B

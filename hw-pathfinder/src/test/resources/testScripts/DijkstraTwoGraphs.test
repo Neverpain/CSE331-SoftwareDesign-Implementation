@@ -1,0 +1,17 @@
+# Tests that Dijkstra's algorithm works properly on two
+# separate graphs
+
+CreateGraph g1
+CreateGraph g2
+
+AddNode g1 A
+AddNode g1 B
+AddNode g2 A
+AddNode g2 B
+
+AddEdge g1 A B 1.0
+AddEdge g2 A B 1.0
+
+FindPath g1 A B
+
+FindPath g2 A B
