@@ -25,10 +25,29 @@ import java.util.*;
  * This class, CampusMap, is a weighted graph representation of the UW Campus from 2006
  * using given data files where the nodes represent a building/location and the edges represent a
  * path from them.
+ *
+ * Specification fields:
+ * @spec.specfield graph : {DirectedGraph<Point, Double>} // graph of all the
+ * buildings/locations with their paths
+ * @spec.specfield buildingNames: {Map<CampusBuilding, Point>} // map of buildings(and their information)
+ * and their respective coordinate points
  */
 public class CampusMap implements ModelAPI {
 
-    // This class does not represent an ADT.
+    // Abstraction Function:
+    //      AF(this) = campus map m such that
+    //      buildings/locations(nodes) in this = this.graph.listNodes()
+    //      paths(edges) in this outgoing from node n = this.graph.getKey(n)
+    //
+    //      all building information(points, names, etc.) in this = buildingNames.keySet()
+    //      points of the buildings/locations n = buildingNames.getKey(n)
+    //
+    // Representation Invariant for every CampusMap g,
+    //      graph != null && is not empty,
+    //      nodes != null && edges != null
+    //
+    //      buildingNames != null && is not empty,
+    //      keys != null && values != null
 
     /**
      * A weighted graph containing all the buildings and paths on campus
@@ -39,6 +58,11 @@ public class CampusMap implements ModelAPI {
      * Holds the names of building objects and their locations as points
      */
     private final Map<CampusBuilding, Point> buildingNames;
+
+    /**
+     * Determines whether to use "big" tests or not
+     */
+    private static final boolean bigTest = false;
 
     /**
      * Constructs a new weighted graph with all the information of building/paths from given files.
@@ -67,19 +91,42 @@ public class CampusMap implements ModelAPI {
             graph.addEdge(new Point(path.getX1(), path.getY1()),new Point(path.getX2(), path.getY2())
             ,path.getDistance());
         }
+        checkRep();
     }
+
+    private void checkRep() {
+        assert (graph != null && !graph.isEmpty());
+        assert (buildingNames != null && !buildingNames.isEmpty());
+
+        if (bigTest) {
+            for (Point key : graph.listNodes()) {
+                assert (key != null);
+            }
+
+            for (CampusBuilding key : buildingNames.keySet()) {
+                assert (key != null);
+            }
+            for (Point key : buildingNames.values()) {
+                assert (key != null);
+            }
+        }
+    }
+
     @Override
     public boolean shortNameExists(String shortName) {
+        checkRep();
         for (CampusBuilding building : buildingNames.keySet()) {
             if (building.getShortName().equals(shortName)) {
                 return true;
             }
         }
+        checkRep();
         return false;
     }
 
     @Override
     public String longNameForShort(String shortName) {
+        checkRep();
         if (!shortNameExists(shortName)) {
             throw new IllegalArgumentException("Short name of building does not exist in campus map.");
         }
@@ -88,20 +135,24 @@ public class CampusMap implements ModelAPI {
                 return building.getLongName();
             }
         }
+        checkRep();
         return shortName;
     }
 
     @Override
     public Map<String, String> buildingNames() {
+        checkRep();
         Map<String, String> names = new HashMap<>();
         for (CampusBuilding building : buildingNames.keySet()) {
             names.put(building.getShortName(), building.getLongName());
         }
+        checkRep();
         return Collections.unmodifiableMap(names);
     }
 
     @Override
     public Path<Point> findShortestPath(String startShortName, String endShortName) {
+        checkRep();
         if (startShortName == null ||  endShortName == null) {
             throw new IllegalArgumentException("Arguments cannot be null");
         }
@@ -123,6 +174,7 @@ public class CampusMap implements ModelAPI {
         for (LabeledEdge<Point, Double> e : points) {
             path = path.extend(e.getDestination(), e.getLabel());
         }
+        checkRep();
         return path;
     }
 }

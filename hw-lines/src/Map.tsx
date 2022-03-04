@@ -26,7 +26,6 @@ interface MapProps {
 
 interface MapState {}
 
-
 class Map extends Component<MapProps, MapState> {
     constructor(props: MapProps) {
         super(props);
@@ -53,13 +52,10 @@ class Map extends Component<MapProps, MapState> {
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-
                     />{
-
                     <div>
                         {listOfMapLines}
                     </div>
-
                     }
                 </MapContainer>
             </div>

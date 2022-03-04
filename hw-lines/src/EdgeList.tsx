@@ -87,7 +87,7 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
                             (",", " ") + " is not a valid input.")
                         }
 
-                        //Pushes edge objects into a list and returns the list as a prop
+                        //Pushes edge objects into a list and returns the list as a prop if inputs are fine
                         else {
                         listOfEdges.push(edge);
                         }
