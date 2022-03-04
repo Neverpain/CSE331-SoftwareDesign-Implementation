@@ -32,10 +32,12 @@ class Map extends Component<MapProps, MapState> {
         super(props);
     }
 
-
     render() {
+        //array containing MapLines
         let listOfMapLines: JSX.Element[] = [];
 
+        //Iterates through array of edges(prop) and creates MapLines from edge data and
+        //adds to array containing MapLines
         for (let i = 0; i < this.props.arrayOfEdges.length; i++) {
             let edge = this.props.arrayOfEdges[i];
             let line = <MapLine key = {i} color={edge.color} x1={edge.x1} y1={edge.y1} x2={edge.x2} y2={edge.y2}/>
@@ -51,10 +53,13 @@ class Map extends Component<MapProps, MapState> {
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+
                     />{
+
                     <div>
                         {listOfMapLines}
                     </div>
+
                     }
                 </MapContainer>
             </div>
