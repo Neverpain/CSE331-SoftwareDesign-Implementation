@@ -35,7 +35,7 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
     constructor(props: EdgeListProps) {
         super(props);
         this.state = {
-            textAreaValue: "I'm stuck..."
+            textAreaValue: "I'm stuck...",
         }
     }
 
@@ -56,7 +56,7 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
                     onChange={(evt) => this.textAreaOnChange(evt)}
                 /> <br/>
                 <button onClick={() => {
-                    let listOfEdges = [];
+                    let listOfEdges: Edge[] = [];
 
                     //Parses string into string[] where each string represents an edge
                     let allEdges = this.state.textAreaValue.split("\n");
@@ -96,8 +96,12 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
                         listOfEdges.push(edge);
                         }
                     }
-                    this.props.onChange(listOfEdges);}}>Draw</button>
-                <button onClick={() => {this.setState({textAreaValue: ""})}}>Clear</button>
+                    this.props.onChange(listOfEdges);}}>Draw
+                </button>
+                <button onClick={() => {
+                    let listOfEdges:Edge[] = [];
+                    this.props.onChange(listOfEdges)}}>Clear
+                </button>
             </div>
         );
     }
