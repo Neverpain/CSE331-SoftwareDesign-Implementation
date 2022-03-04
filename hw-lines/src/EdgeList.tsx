@@ -86,6 +86,10 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
                             alert("Edges must have number coordinates." + "\nThe edge: " + values.toString().replaceAll
                             (",", " ") + " is not a valid input.")
                         }
+                        else if (!Number.isNaN(parseFloat(values[4]))) {
+                            alert("The color of the edge must not be a number." + "\nThe edge: " + values.toString().replaceAll
+                            (",", " ") + " is not a valid input.")
+                        }
 
                         //Pushes edge objects into a list and returns the list as a prop if inputs are fine
                         else {
