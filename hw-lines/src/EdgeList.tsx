@@ -45,6 +45,40 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
         })
     }
 
+    newEdgeList(): Edge[] {
+        let listOfEdges: Edge[] = [];
+        let invalids: string = "";
+
+        //Parses string into string[] where each string represents an edge
+        let allEdges = this.state.textAreaValue.split("\n");
+
+        //Parse edges into its data and creates an edge object
+        for (let i = 0; i < allEdges.length; i++) {
+            let values = allEdges[i].split(" ")
+            let edge: Edge = {
+                x1: parseFloat(values[0]),
+                y1: parseFloat(values[1]),
+                x2: parseFloat(values[2]),
+                y2: parseFloat(values[3]),
+                color: values[4],
+            }
+
+            if (values.length != 5 || edge.x1 > 4000 || edge.x2 > 4000 || edge.y1 > 4000 || edge.y2 > 4000 ||
+                edge.x1 < 0 || edge.x2 < 0 || edge.y1 < 0 || edge.y2 < 0 || Number.isNaN(edge.x1)
+                || Number.isNaN(edge.x2) || Number.isNaN(edge.y1) || Number.isNaN(edge.y2)) {
+
+                invalids += values.toString().replaceAll(",", " ") + "\n";
+            } else {
+                listOfEdges.push(edge);
+            }
+        }
+        if (invalids.length != 0) {
+            alert("Edges must follow the format (x1 y1 x2 y2 color). \nThe following edges are not valid " +
+                "input:\n" + invalids);
+        }
+        return listOfEdges;
+    }
+
     render() {
         return (
             <div id="edge-list">
@@ -56,47 +90,7 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
                     onChange={(evt) => this.textAreaOnChange(evt)}
                 /> <br/>
                 <button onClick={() => {
-                    let listOfEdges: Edge[] = [];
-
-                    //Parses string into string[] where each string represents an edge
-                    let allEdges = this.state.textAreaValue.split("\n");
-
-                    //Parse edges into its data and creates an edge object
-                    for (let i = 0; i < allEdges.length; i++) {
-                        let values = allEdges[i].split(" ")
-                        let edge: Edge = {
-                            x1: parseFloat(values[0]),
-                            y1: parseFloat(values[1]),
-                            x2: parseFloat(values[2]),
-                            y2: parseFloat(values[3]),
-                            color: values[4],
-                        }
-
-                        // Checks for valid formatting of edge data/inputs
-                        if (values.length != 5) {
-                            alert("Edges must follow the format (x1 y1 x2 y2 color)." + "\nThe edge: " + values.toString().replaceAll
-                            (",", " ") + " is not a valid input.")
-                        }
-                        else if (edge.x1 > 4000 || edge.x2 > 4000 || edge.y1 > 4000 || edge.y2 > 4000 ||
-                            edge.x1 < 0 || edge.x2 < 0 || edge.y1 < 0 || edge.y2 < 0) {
-                            alert("Edges must have coordinates greater than or equal to 0 and less than or equal to 4000." +
-                            "\nThe edge: " + values.toString().replaceAll(",", " ") + " is not a valid input.")
-                        }
-                        else if (Number.isNaN(edge.x1) || Number.isNaN(edge.x2) || Number.isNaN(edge.y1) || Number.isNaN(edge.y2)) {
-                            alert("Edges must have number coordinates." + "\nThe edge: " + values.toString().replaceAll
-                            (",", " ") + " is not a valid input.")
-                        }
-                        else if (!Number.isNaN(parseFloat(values[4]))) {
-                            alert("The color of the edge must not be a number." + "\nThe edge: " + values.toString().replaceAll
-                            (",", " ") + " is not a valid input.")
-                        }
-
-                        //Pushes edge objects into a list and returns the list as a prop if inputs are fine
-                        else {
-                        listOfEdges.push(edge);
-                        }
-                    }
-                    this.props.onChange(listOfEdges);}}>Draw
+                    this.props.onChange(this.newEdgeList())}}>Draw
                 </button>
                 <button onClick={() => {
                     let listOfEdges:Edge[] = [];
