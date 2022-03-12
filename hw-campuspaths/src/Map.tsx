@@ -15,42 +15,52 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import MapLine from "./MapLine";
 import { UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER } from "./Constants";
+import {Point} from "./EdgeList";
 
 // This defines the location of the map. These are the coordinates of the UW Seattle campus
 const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
 
-// NOTE: This component is a suggestion for you to use, if you would like to. If
-// you don't want to use this component, you're free to delete it or replace it
-// with your hw-lines Map
-
 interface MapProps {
-  // TODO: Define the props of this component.
+    arrayOfEdges: Point[];
 }
 
 interface MapState {}
 
 class Map extends Component<MapProps, MapState> {
-  render() {
-    return (
-      <div id="map">
-        <MapContainer
-          center={position}
-          zoom={15}
-          scrollWheelZoom={false}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {
-            // TODO: Render map lines here using the MapLine component. E.g.
-            // <MapLine key="key1" color="red" x1={1000} y1={1000} x2={2000} y2={2000}/>
-            // will draw a red line from the point 1000,1000 to 2000,2000 on the
-            // map. Note that key should be a unique key that only this MapLine has.
-          }
-        </MapContainer>
-      </div>
-    );
+    constructor(props: MapProps) {
+        super(props);
+    }
+
+    render() {
+        //array containing MapLines
+        let listOfMapLines: JSX.Element[] = [];
+
+        //Iterates through array of edges(prop) and creates MapLines from edge data and
+        //adds to array containing MapLines
+        for (let i = 0; i < this.props.arrayOfEdges.length - 1; i++) {
+            let p1 = this.props.arrayOfEdges[i];
+            let p2 = this.props.arrayOfEdges[i + 1];
+            let line = <MapLine key = {i} color="blue" x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y}/>
+            listOfMapLines.push(line);
+        }
+        return (
+            <div id="map">
+                <MapContainer
+                    center={position}
+                    zoom={15}
+                    scrollWheelZoom={false}
+                >
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />{
+                    <div>
+                        {listOfMapLines}
+                    </div>
+                    }
+                </MapContainer>
+            </div>
+        );
   }
 }
 

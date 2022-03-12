@@ -9,19 +9,42 @@
  * author.
  */
 
-import React, {Component} from 'react';
+import React, { Component } from "react";
+import EdgeList from "./EdgeList";
+import Map from "./Map";
+import {Point} from "./EdgeList";
 
 // Allows us to write CSS styles inside App.css, any styles will apply to all components inside <App />
 import "./App.css";
 
-class App extends Component<{}, {}> {
+interface AppState {
+    arrayOfEdges: Point[];
+}
 
-    render() {
-        return (
-            <p>Here's the beginning of your AMAZING CampusPaths GUI!</p>
-        );
-    }
+class App extends Component<{}, AppState> { // <- {} means no props.
 
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      arrayOfEdges: []
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <h1 id="app-title">Campus Paths!</h1>
+        <div>
+          <Map arrayOfEdges={this.state.arrayOfEdges}/>
+        </div>
+        <EdgeList
+          onChange={(value) => {this.setState({arrayOfEdges: value});
+            console.log("EdgeList onChange", value);
+          }}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
