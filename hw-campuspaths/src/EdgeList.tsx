@@ -73,7 +73,7 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
 
             //Pushes the start and end points of each segment in path to an array of points
             for (let i = 0; i < data['path'].length; i++) {
-                path.push(data['path'][i]['start'], data['path'][i]['end']);
+                path.push(data['path'][i]['end']);
             }
             this.props.onChange(path);
         } catch (e) {
