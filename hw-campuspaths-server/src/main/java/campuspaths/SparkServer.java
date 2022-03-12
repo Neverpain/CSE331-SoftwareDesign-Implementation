@@ -12,7 +12,6 @@
 package campuspaths;
 
 import campuspaths.utils.CORSFilter;
-import com.google.gson.Gson;
 import pathfinder.CampusMap;
 import spark.Request;
 import spark.Response;
@@ -39,16 +38,14 @@ public class SparkServer {
                 if(start == null || end == null) {
                     Spark.halt(400);
                 }
-                Gson gson = new Gson();
-                return gson.toJson(map.findShortestPath(start, end));
+                return map.findShortestPath(start, end);
             }
         });
 
         Spark.get("/buildingNames", new Route() {
             @Override
             public Object handle(Request request, Response response) throws Exception {
-                Gson gson = new Gson();
-                return gson.toJson(map.buildingNames());
+                return map.buildingNames();
             }
         });
 
